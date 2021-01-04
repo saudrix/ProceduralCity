@@ -6,11 +6,13 @@ using System;
 public class WorldManager : MonoBehaviour
 {
     // Modular parameters
-    public bool enableDebug = false;
-    bool drawDensity = true;
+    [SerializeField]
+    bool enableDebug = false;
+    bool drawDensity = false;
 
     // World data information
-    public int worldSize = 100;
+    [SerializeField]
+    int worldSize = 100;
     private SimData[,] worldData;
 
     // Debug Plane
@@ -25,8 +27,8 @@ public class WorldManager : MonoBehaviour
         worldData = new SimData[worldSize, worldSize];
 
         mapGenerator.SetDensity(worldData);
-        //mapGenerator.SetMainRoads(worldData);
-        //mapGenerator.AddBuildingLog(worldData);
+        mapGenerator.SetMainRoads(worldData);
+        mapGenerator.AddBuildingLog(worldData);
 
         //worldObjects = roadInstantier.CreateRoads(world, worldObjects);
         //roadConnector.ConnectRoads(world, worldObjects);

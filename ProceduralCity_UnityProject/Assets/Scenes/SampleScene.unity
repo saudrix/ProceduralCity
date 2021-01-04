@@ -332,6 +332,8 @@ MonoBehaviour:
   worldSize: 100
   mapGenerator:
     densityFrenquency: 5
+    maxSample: 200
+    maxLowSample: 100
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0
