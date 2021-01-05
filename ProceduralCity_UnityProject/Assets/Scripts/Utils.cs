@@ -60,7 +60,7 @@ public static class Utils
             if (pos.x + i > 0 && pos.x + i < worldSize)
             {
                 if (pos.y - dist > 0) neighbours.Add(new Vector2Int(pos.x + i, pos.y - dist));
-                if (pos.y + dist < 0) neighbours.Add(new Vector2Int(pos.x + i, pos.y + dist));
+                if (pos.y + dist < worldSize) neighbours.Add(new Vector2Int(pos.x + i, pos.y + dist));
             }
         }
         for (int j = (-dist); j <= dist; j++)
