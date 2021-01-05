@@ -22,7 +22,7 @@ public class MapGenerator
         SetDensity(worldData);
         SetMainRoads(worldData);
         AddBuildingLog(worldData);
-        //DiscriminateRoad(worldData);
+        DiscriminateRoad(worldData);
     }
 
     public void SetDensity(SimData[,] worldData)
@@ -201,6 +201,7 @@ public class MapGenerator
                             updatedRoad[x, y] = "C1";
                         else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "C4";
+                        else updatedRoad[x, y] = "E1"; // If not its a dead end
                     }
                     else if (x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr))
                     {
@@ -208,12 +209,8 @@ public class MapGenerator
                             updatedRoad[x, y] = "C2";
                         else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "C3";
+                        else updatedRoad[x, y] = "E3"; // If not its a dead end
                     }
-                    // If 1 neighbor, it's a dead end
-                    else if (x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr))
-                        updatedRoad[x, y] = "E3";
-                    else if (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr))
-                        updatedRoad[x, y] = "E1";
                     else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
                         updatedRoad[x, y] = "E4";
                     else if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
