@@ -6,7 +6,7 @@ using UnityEditor;
 [InitializeOnLoad()]
 public class WaypointEditor
 {
-    /*[DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable)]
+    [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable)]
     public static void OnDrawSceneGizmos(Waypoint waypoint, GizmoType gizmoType)
     {
         if((gizmoType & GizmoType.Selected) != 0)
@@ -46,5 +46,5 @@ public class WaypointEditor
                 Gizmos.DrawLine(waypoint.transform.position + offset, w.transform.position + offsetTo);
             }
         }
-    }*/
+    }
 }
