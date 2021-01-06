@@ -19,17 +19,17 @@ public class WorldManager : MonoBehaviour
     // Useful classes
     public MapGenerator mapGenerator = new MapGenerator();
     public RoadInstantier roadInstantier = new RoadInstantier();
-    /*public BuildingInstantier buildingInstantier = new BuildingInstantier();
-    public RoadConnector roadConnector = new RoadConnector();*/
+    //public BuildingInstantier buildingInstantier = new BuildingInstantier();
+    public RoadConnector roadConnector = new RoadConnector();
 
     void Start()
     {
         worldData = new SimData[worldSize, worldSize];
 
-        mapGenerator.GenerateMap(worldData);
-
-        //worldObjects = roadInstantier.CreateRoads(world, worldObjects);
-        //roadConnector.ConnectRoads(world, worldObjects);
+        //mapGenerator.GenerateMap(worldData);
+        //roadInstantier.CreateRoads(worldData);
+        //buildingInstantiater.CreateBuildings(worldData);
+        //roadConnector.ConnectRoads(worldData);
     }
 
     void Update()

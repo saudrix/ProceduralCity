@@ -6,112 +6,75 @@ using System;
 [Serializable]
 public class RoadInstantier
 {
-    public List<GameObject> roadPrefabs;
+    public GameObject I_road;
+
+    public List<GameObject> T1_roads;
+    public List<GameObject> T2_roads;
+    public List<GameObject> T3_roads;
+    public List<GameObject> T4_roads;
+
+    public List<GameObject> SV_roads;
+    public List<GameObject> SH_roads;
+
     public List<GameObject> elbowPrefabs;
-    public List<GameObject> tBonePrefabs;
-    public GameObject intersectPrefab;
+
+    public GameObject roadParent;
 
     System.Random random = new System.Random();
 
-    public GameObject[,] CreateRoads(string[,] world, GameObject[,] worldData)
+    public void CreateRoads(SimData[,] worldData)
     {
-        int worldSize = world.GetLength(0);
+        int worldSize = worldData.GetLength(0);
+
+        List<GameObject> roads = new List<GameObject>();
+
         for (int y = 0; y < worldSize; y++)
         {
             for (int x = 0; x < worldSize; x++)
             {
-                // If we find a road
-                if (world[x, y] == "R" || world[x, y] == "I")
+                switch (worldData[x, y].repr)
                 {
-                    Vector2Int ActualPos;
-                    if (world[x, y] == "I" || y - 1 > 0 && world[x, y - 1] == "R" && y + 1 < worldSize && world[x, y + 1] == "R" && x - 1 > 0 && world[x - 1, y] == "R" && x + 1 < worldSize && world[x + 1, y] == "R")
-                    {
-                        ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, intersectPrefab);
-                        GameObject trp = GameObject.Instantiate(intersectPrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                        trp.transform.Rotate(new Vector3(-90, 0, 0));
+                    case "I":
+                        roads.Add(AddRoad(I_road,x,y,0, worldSize, worldData, roadParent));
+                        break;
 
-                        worldData[x, y] = trp;
-                    }
-                    // Dealing with T-Bones Intersect
-                    else if (y - 1 > 0 && (world[x, y - 1] == "R" || world[x, y - 1] == "I") && y + 1 < worldSize && (world[x, y + 1] == "R" || world[x, y + 1] == "I"))
-                    {
-                        if (x - 1 > 0 && world[x - 1, y] == "R")
-                        {
-                            GameObject tbonePrefab = tBonePrefabs[random.Next(0, tBonePrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, tbonePrefab);
-                            GameObject trp = GameObject.Instantiate(tbonePrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            trp.transform.Rotate(new Vector3(-90, 0, 270));
+                    case "T1":
+                        GameObject T1_road_prefab = T1_roads[random.Next(0, T1_roads.Count)];
+                        roads.Add(AddRoad(T1_road_prefab, x, y, 180, worldSize, worldData, roadParent, -90));
+                        break;
 
-                            worldData[x, y] = trp;
-                        }
-                        else if (x + 1 < worldSize && world[x + 1, y] == "R")
-                        {
-                            GameObject tbonePrefab = tBonePrefabs[random.Next(0, tBonePrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, tbonePrefab);
-                            GameObject trp = GameObject.Instantiate(tbonePrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            trp.transform.Rotate(new Vector3(-90, 0, 90));
+                    case "T2":
+                        GameObject T2_road_prefab = T2_roads[random.Next(0, T2_roads.Count)];
+                        roads.Add(AddRoad(T2_road_prefab, x, y, 180, worldSize, worldData, roadParent));
+                        break;
 
-                            worldData[x, y] = trp;
-                        }
-                        else
-                        {
-                            GameObject roadPrefab = roadPrefabs[random.Next(0, roadPrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, roadPrefab);
-                            GameObject rp = GameObject.Instantiate(roadPrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            rp.transform.Rotate(new Vector3(-90, 0, 90));
+                    case "T3":
+                        GameObject T3_road_prefab = T3_roads[random.Next(0, T3_roads.Count)];
+                        roads.Add(AddRoad(T3_road_prefab, x, y, 0, worldSize, worldData, roadParent, -90));
+                        break;
 
-                            worldData[x, y] = rp;
-                        }
-                    }
-                    else if (x - 1 > 0 && (world[x - 1, y] == "R" || world[x - 1, y] == "I") && x + 1 < worldSize && (world[x + 1, y] == "R" || world[x + 1, y] == "I"))
-                    {
-                        if (y - 1 > 0 && world[x, y - 1] == "R")
-                        {
-                            GameObject tbonePrefab = tBonePrefabs[random.Next(0, tBonePrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, tbonePrefab);
-                            GameObject trp = GameObject.Instantiate(tbonePrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            trp.transform.Rotate(new Vector3(-90, 0, 180));
+                    case "T4":
+                        GameObject T4_road_prefab = T4_roads[random.Next(0, T4_roads.Count)];
+                        roads.Add(AddRoad(T4_road_prefab, x, y, 0, worldSize, worldData, roadParent));
+                        break;
 
-                            worldData[x, y] = trp;
-                        }
-                        else if (y + 1 < worldSize && world[x, y + 1] == "R")
-                        {
-                            GameObject tbonePrefab = tBonePrefabs[random.Next(0, tBonePrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, tbonePrefab);
-                            GameObject trp = GameObject.Instantiate(tbonePrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            trp.transform.Rotate(new Vector3(-90, 0, 0));
+                    case "SV":
+                        GameObject SV_road_prefab = SV_roads[random.Next(0, SV_roads.Count)];
+                        roads.Add(AddRoad(SV_road_prefab, x, y, 90, worldSize, worldData, roadParent));
+                        break;
 
-                            worldData[x, y] = trp;
-                        }
-                        else
-                        {
-                            GameObject roadPrefab = roadPrefabs[random.Next(0, roadPrefabs.Count)];
-                            ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, roadPrefab);
-                            GameObject rp = GameObject.Instantiate(roadPrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
-                            rp.transform.Rotate(new Vector3(-90, 0, 0));
+                    case "SH":
+                        GameObject SH_road_prefab = SH_roads[random.Next(0, SH_roads.Count)];
+                        roads.Add(AddRoad(SH_road_prefab,x,y,0,worldSize,worldData,roadParent));
+                        break;
 
-                            worldData[x, y] = rp;
-                        }
-                    }
-                    // Dealing with Elbows
-                    /*else if ()
-                    {
-
-                    }*/
-                    // Dead ends
-                    else if (x - 1 > 0 && world[x - 1, y] == "R" || x + 1 < worldSize && world[x + 1, y] == "R")
-                    {
-
-                    }
-                    else if (y - 1 > 0 && world[x, y - 1] == "R" || y + 1 < worldSize && world[x, y + 1] == "R")
-                    {
-
-                    }
                 }
             }
         }
-        return worldData;
 
+        roadParent.SetActive(true);
+        foreach(GameObject r in roads) { r.SetActive(false); r.SetActive(true); }
+        StaticBatchingUtility.Combine(roads.ToArray(), roadParent);
     }
 
     public Vector2Int ComputePosition(Vector2Int coordinates, int worldSize, GameObject road)
@@ -122,5 +85,18 @@ public class RoadInstantier
         int newY = (coordinates.y - worldSize / 2) - (int)(size / 2);
 
         return new Vector2Int(newX, newY);
+    }
+
+    public GameObject AddRoad(GameObject prefabRef, int x, int y, int rotation, int worldSize, SimData[,] worldData, GameObject parent = null, int zRot = 0)
+    {
+        Vector2Int ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, prefabRef);
+        GameObject goRef = GameObject.Instantiate(prefabRef, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
+        goRef.transform.Rotate(new Vector3(-90, rotation, zRot));
+        goRef.transform.parent = parent.transform;
+        worldData[x, y].model = goRef;
+        goRef.isStatic = true;
+        goRef.tag = "roads";
+
+        return goRef;
     }
 }

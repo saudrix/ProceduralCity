@@ -189,9 +189,9 @@ public class MapGenerator
                     else if ((x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr)) && (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr)))
                     {
                         if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
-                            updatedRoad[x, y] = "T2";
-                        else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "T4";
+                        else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
+                            updatedRoad[x, y] = "T2";
                         else updatedRoad[x, y] = "SH";
                     }
                     // Adding elbows differenciation
