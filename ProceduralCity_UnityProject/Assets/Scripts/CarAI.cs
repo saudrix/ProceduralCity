@@ -8,20 +8,24 @@ public class CarAI : MonoBehaviour
 {
     [SerializeField]
     private List<Waypoint> path;
+    [SerializeField]
+    private GameObject rayStartingPoint = null;
+    private float safetyDistance = .1f;
 
     private float distanceThreshold = .3f;
     private float arrivalThreshold = .2f;
-    private float angleOffset = 12;
+    private float angleOffset = 2;
 
     private Vector3 currentTarget;
 
     private int index = 0;
 
     private bool stop;
+    private bool collisionStop = false;
 
     public bool Stop
     {
-        get { return stop; }
+        get { return stop || collisionStop; }
         set { stop = value; }
     }
 
@@ -60,6 +64,16 @@ public class CarAI : MonoBehaviour
     {
         checkArrival();
         Drive();
+        CheckCollisions();
+    }
+
+    private void CheckCollisions()
+    {
+        if (Physics.Raycast(rayStartingPoint.transform.position, transform.forward, safetyDistance, 1 << gameObject.layer))
+        {
+            collisionStop = true;
+        }
+        else collisionStop = false;
     }
 
     private void Drive()
