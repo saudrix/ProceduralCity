@@ -33,4 +33,9 @@ public class CarController : MonoBehaviour
         }
         rigidBody.AddTorque(movement.x * Vector3.up * torque * movement.y);
     }
+
+    private void OnMouseDown()
+    {
+        CameraController.instance.followTransform = transform;
+    }
 }
