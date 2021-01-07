@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1695596260955239875}
   - component: {fileID: 2317150685675174502}
   - component: {fileID: 562064900191964844}
+  - component: {fileID: 7140519597763915843}
+  - component: {fileID: 8507691824709576915}
   m_Layer: 0
   m_Name: light_T3_1
   m_TagString: Untagged
@@ -87,6 +89,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7140519597763915843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075076943082418041}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008858156, y: 0.0076948497, z: 0.0034767655}
+  m_Center: {x: -0.00015087306, y: -0.0002475953, z: 0.0019220124}
+--- !u!114 &8507691824709576915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075076943082418041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f890b9a2d5fc8d479b06e4ed91c6ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCar: {fileID: 0}
 --- !u!1 &4178589833603178315
 GameObject:
   m_ObjectHideFlags: 0

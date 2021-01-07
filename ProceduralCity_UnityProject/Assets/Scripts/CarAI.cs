@@ -32,12 +32,17 @@ public class CarAI : MonoBehaviour
     [field: SerializeField]
     public UnityEvent<Vector2> OnDrive { get; set; }
 
+    public bool IsArrived()
+    {
+        return index >= path.Count - 1;
+    }
+
     private void Start()
     {
         if (path == null || path.Count == 0) Stop = true;
         else
         {
-            currentTarget = path[index].GetPosition();
+            currentTarget = path[index].transform.position;//.GetPosition();
         }
     }
 
@@ -51,9 +56,9 @@ public class CarAI : MonoBehaviour
         }
         this.path = path;
         index = 0;
-        currentTarget = path[index].GetPosition();
+        currentTarget = path[index].transform.position;//.GetPosition();
 
-        Vector3 relative = transform.InverseTransformPoint(this.path[index + 1].GetPosition());
+        Vector3 relative = transform.InverseTransformPoint(this.path[index + 1].transform.position/*.GetPosition()*/);
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
@@ -115,7 +120,7 @@ public class CarAI : MonoBehaviour
         }
         else
         {
-            currentTarget = path[index].GetPosition();
+            currentTarget = path[index].transform.position;//.GetPosition();
         }
     }
 }
