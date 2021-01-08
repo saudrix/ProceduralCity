@@ -1552,6 +1552,15 @@ MonoBehaviour:
     - {fileID: 3850979077836613230, guid: 5df461516e95caa4da30cb93270070b1, type: 3}
     elbowPrefabs: []
     roadParent: {fileID: 852551965}
+  buildingInstantier:
+    grounds:
+    - {fileID: 2611192001000905861, guid: c19142d7ba073174ca7ef09344cbe07a, type: 3}
+    rdcs:
+    - {fileID: 7021833737049963136, guid: fa2198914a07f8042b5dff38104d21f0, type: 3}
+    floors:
+    - {fileID: 8361707702598860527, guid: 066faec29b164f8428fc46fdab7bd1af, type: 3}
+    - {fileID: 3836035292268188372, guid: b9595fd9a794c674bb0b5f22033c8435, type: 3}
+    houses: []
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0
@@ -1560,7 +1569,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347994632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -0.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

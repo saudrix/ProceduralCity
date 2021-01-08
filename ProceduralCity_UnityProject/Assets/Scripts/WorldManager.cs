@@ -21,7 +21,7 @@ public class WorldManager : MonoBehaviour
     // Useful classes
     public MapGenerator mapGenerator = new MapGenerator();
     public RoadInstantier roadInstantier = new RoadInstantier();
-    //public BuildingInstantier buildingInstantier = new BuildingInstantier();
+    public BuildingInstantier buildingInstantier = new BuildingInstantier();
     public RoadConnector roadConnector = new RoadConnector();
 
     void Start()
@@ -35,14 +35,13 @@ public class WorldManager : MonoBehaviour
         roadInstantier.CreateRoads(worldData);
         roadConnector.ConnectRoads(worldData);
 
-        //buildingInstantiater.CreateBuildings(worldData);
+        buildingInstantier.CreateBuildings(worldData);
     }
 
     void Update()
     {
         timeOfDay += Time.deltaTime / timeManagment;
         timeOfDay %= 24;
-        Debug.Log(timeOfDay);
     }
 
     void OnDrawGizmos()
