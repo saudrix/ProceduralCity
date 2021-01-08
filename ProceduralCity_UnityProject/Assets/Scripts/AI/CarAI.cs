@@ -10,10 +10,10 @@ public class CarAI : MonoBehaviour
     private List<Waypoint> path;
     [SerializeField]
     private GameObject rayStartingPoint = null;
-    private float safetyDistance = .1f;
+    private float safetyDistance = .2f;
 
-    private float distanceThreshold = .3f;
-    private float arrivalThreshold = .2f;
+    private float distanceThreshold = .4f;
+    private float arrivalThreshold = .3f;
     private float angleOffset = 2;
 
     private Vector3 currentTarget;
@@ -74,11 +74,24 @@ public class CarAI : MonoBehaviour
 
     private void CheckCollisions()
     {
+        Ray ray = new Ray(rayStartingPoint.transform.position, transform.forward);
+        RaycastHit hit;
+
         if (Physics.Raycast(rayStartingPoint.transform.position, transform.forward, safetyDistance, 1 << gameObject.layer))
         {
             collisionStop = true;
         }
-        else collisionStop = false;
+        else if (Physics.Raycast(ray, out hit, safetyDistance))
+        {
+            if (hit.collider.isTrigger && hit.collider.enabled == true)
+            {
+                if (hit.transform.gameObject.CompareTag("trafficLight"))
+                    collisionStop = true;
+            }
+        }
+        else{
+            collisionStop = false;
+        }
     }
 
     private void Drive()

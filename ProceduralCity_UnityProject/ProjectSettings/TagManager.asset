@@ -6,6 +6,7 @@ TagManager:
   tags:
   - roads
   - Car
+  - trafficLight
   layers:
   - Default
   - TransparentFX

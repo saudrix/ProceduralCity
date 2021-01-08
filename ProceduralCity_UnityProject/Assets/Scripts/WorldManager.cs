@@ -5,6 +5,8 @@ using System;
 
 public class WorldManager : MonoBehaviour
 {
+    public static float timeOfDay = 0;
+    public int timeManagment = 100;
     // Modular parameters
     [SerializeField]
     bool enableDebug = false;
@@ -26,6 +28,8 @@ public class WorldManager : MonoBehaviour
     {
         worldData = new SimData[worldSize, worldSize];
 
+        GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        floor.transform.localScale = new Vector3(worldSize / 10, 1, worldSize / 10);
         //mapGenerator.GenerateMap(worldData);
         //roadInstantier.CreateRoads(worldData);
         //buildingInstantiater.CreateBuildings(worldData);
@@ -34,7 +38,9 @@ public class WorldManager : MonoBehaviour
 
     void Update()
     {
-
+        timeOfDay += Time.deltaTime / timeManagment;
+        timeOfDay %= 24;
+        Debug.Log(timeOfDay);
     }
 
     void OnDrawGizmos()
