@@ -30,10 +30,12 @@ public class WorldManager : MonoBehaviour
 
         GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
         floor.transform.localScale = new Vector3(worldSize / 10, 1, worldSize / 10);
-        //mapGenerator.GenerateMap(worldData);
-        //roadInstantier.CreateRoads(worldData);
+       
+        mapGenerator.GenerateMap(worldData);
+        roadInstantier.CreateRoads(worldData);
+        roadConnector.ConnectRoads(worldData);
+
         //buildingInstantiater.CreateBuildings(worldData);
-        //roadConnector.ConnectRoads(worldData);
     }
 
     void Update()
