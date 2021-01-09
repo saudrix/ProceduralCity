@@ -1162,13 +1162,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 0, y: 80, z: -2}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 128162124}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!1001 &1030494424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1557,10 +1557,18 @@ MonoBehaviour:
     - {fileID: 2611192001000905861, guid: c19142d7ba073174ca7ef09344cbe07a, type: 3}
     rdcs:
     - {fileID: 7021833737049963136, guid: fa2198914a07f8042b5dff38104d21f0, type: 3}
-    floors:
+    - {fileID: 7498773564146112127, guid: 2c6b7bb178814684fbf39c3467382121, type: 3}
+    - {fileID: 886184043823021118, guid: b994ef9793fde3d4f98ff45140e75b17, type: 3}
+    floors1:
     - {fileID: 8361707702598860527, guid: 066faec29b164f8428fc46fdab7bd1af, type: 3}
     - {fileID: 3836035292268188372, guid: b9595fd9a794c674bb0b5f22033c8435, type: 3}
-    houses: []
+    floors2:
+    - {fileID: 4214345281237848213, guid: 1407cce58afebd540899f30e14966433, type: 3}
+    houses:
+    - {fileID: 616578769322908542, guid: bbe9144a59005b3439358329d26a9c47, type: 3}
+    - {fileID: 6502192864516651814, guid: c3647a4a9903e0c43a9b40a8a193ec82, type: 3}
+    - {fileID: 6875153856174415119, guid: f07f4413ee5dc4f46bed16527572afd8, type: 3}
+    - {fileID: 5364499815158215692, guid: 993b8550fa9c69b4ea27eadf89679eec, type: 3}
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0

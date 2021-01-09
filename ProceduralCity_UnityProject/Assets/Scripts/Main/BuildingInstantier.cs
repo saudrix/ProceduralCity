@@ -8,7 +8,8 @@ public class BuildingInstantier
 {
     public List<GameObject> grounds;
     public List<GameObject> rdcs;
-    public List<GameObject> floors;
+    public List<GameObject> floors1;
+    public List<GameObject> floors2;
     public List<GameObject> houses;
 
     System.Random rnd = new System.Random();
@@ -32,10 +33,8 @@ public class BuildingInstantier
                     }
                     else
                     {
-                        //CreateHouse(x, y);
+                        CreateHouse(x, y);
                     }
-
-
                 }
             }
         }
@@ -43,6 +42,8 @@ public class BuildingInstantier
 
     public void CreateBuilding(int x, int y, int height, int angle = 0, int worldSize = 100)
     {
+        // Choose style
+        List<GameObject> floors = rnd.Next(0, 2) == 0 ? floors1 : floors2;
         // Dropping ground
         GameObject groundPrefab = grounds[rnd.Next(0, grounds.Count)];
         Vector2Int ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, groundPrefab);
