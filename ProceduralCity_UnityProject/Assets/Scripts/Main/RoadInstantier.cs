@@ -68,6 +68,18 @@ public class RoadInstantier
                         roads.Add(AddRoad(SH_road_prefab,x,y,0,worldSize,worldData,roadParent));
                         break;
 
+                    case "E1":
+                        Debug.Log("E1");
+                        break;
+                    case "E2":
+                        Debug.Log("E2");
+                        break;
+                    case "E3":
+                        Debug.Log("E3");
+                        break;
+                    case "E4":
+                        Debug.Log("E4");
+                        break;
                 }
             }
         }
