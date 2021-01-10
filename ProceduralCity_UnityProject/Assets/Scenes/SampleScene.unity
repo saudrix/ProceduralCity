@@ -1550,7 +1550,18 @@ MonoBehaviour:
     SH_roads:
     - {fileID: 4447041759423718874, guid: 38b085037a5842b4fa4caaefeebc5496, type: 3}
     - {fileID: 3850979077836613230, guid: 5df461516e95caa4da30cb93270070b1, type: 3}
-    elbowPrefabs: []
+    C1_roads: []
+    C2_roads: []
+    C3_roads: []
+    C4_roads: []
+    E1_roads:
+    - {fileID: 8955678064063946066, guid: 765d78a7da1a2ef4a9c3af0aa56e3c36, type: 3}
+    E2_roads:
+    - {fileID: 7171474818745952825, guid: 5e9147f22f39401488d9dc4fd7879e49, type: 3}
+    E3_roads:
+    - {fileID: 8299738125053746497, guid: cd4b0dc34b27907439155af334b815e4, type: 3}
+    E4_roads:
+    - {fileID: 7391259465792062831, guid: 268494e9884fc6d409bd1cd8a0d7cb6a, type: 3}
     roadParent: {fileID: 852551965}
   buildingInstantier:
     grounds:

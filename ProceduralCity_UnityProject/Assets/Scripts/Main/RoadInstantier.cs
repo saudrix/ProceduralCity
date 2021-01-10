@@ -16,7 +16,16 @@ public class RoadInstantier
     public List<GameObject> SV_roads;
     public List<GameObject> SH_roads;
 
-    public List<GameObject> elbowPrefabs;
+    public List<GameObject> C1_roads;
+    public List<GameObject> C2_roads;
+    public List<GameObject> C3_roads;
+    public List<GameObject> C4_roads;
+
+    public List<GameObject> E1_roads;
+    public List<GameObject> E2_roads;
+    public List<GameObject> E3_roads;
+    public List<GameObject> E4_roads;
+
 
     public GameObject roadParent;
 
@@ -69,16 +78,20 @@ public class RoadInstantier
                         break;
 
                     case "E1":
-                        Debug.Log("E1");
+                        GameObject E1_road_prefab = E1_roads[random.Next(0, E1_roads.Count)];
+                        roads.Add(AddRoad(E1_road_prefab, x, y, 0, worldSize, worldData, roadParent));
                         break;
                     case "E2":
-                        Debug.Log("E2");
+                        GameObject E2_road_prefab = E2_roads[random.Next(0, E2_roads.Count)];
+                        roads.Add(AddRoad(E2_road_prefab, x, y, 90, worldSize, worldData, roadParent));
                         break;
                     case "E3":
-                        Debug.Log("E3");
+                        GameObject E3_road_prefab = E3_roads[random.Next(0, E3_roads.Count)];
+                        roads.Add(AddRoad(E3_road_prefab, x, y, 180, worldSize, worldData, roadParent));
                         break;
                     case "E4":
-                        Debug.Log("E4");
+                        GameObject E4_road_prefab = E4_roads[random.Next(0, E4_roads.Count)];
+                        roads.Add(AddRoad(E4_road_prefab, x, y, 270, worldSize, worldData, roadParent));
                         break;
                 }
             }

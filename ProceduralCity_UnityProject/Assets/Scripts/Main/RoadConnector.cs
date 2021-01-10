@@ -31,6 +31,9 @@ public class RoadConnector
 
     public void ConnectRoadRight(GameObject rl, GameObject rr)
     {
+        Debug.Log(rl.name);
+        Debug.Log(rr.name);
+
         Waypoint RightIn = rl.transform.Find("RightIn").gameObject.GetComponent<Waypoint>();
         Waypoint RightOut = rl.transform.Find("RightOut").gameObject.GetComponent<Waypoint>();
 

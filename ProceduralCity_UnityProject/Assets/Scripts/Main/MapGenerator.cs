@@ -168,29 +168,29 @@ public class MapGenerator
                 if (worldData[x, y].repr == "I")
                     updatedRoad[x, y] = "I";
                 
-                if(worldData[x,y].repr == "R")
+                else if(worldData[x,y].repr == "R")
                 {
                     // Adding 4ways crossroads
-                    if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr) && y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr)
-                        && x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr) && x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr))
+                    if (y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr) && y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr)
+                        && x - 1 >= 0 && targetChar.Contains(worldData[x - 1, y].repr) && x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr))
                         updatedRoad[x, y] = "I";
 
                     // T1 && T3 Verticals T Junctions and Vertical straights
-                    else if ((y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr)) && (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr)))
+                    else if ((y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr)) && (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr)))
                     {
                         if (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr))
                             updatedRoad[x, y] = "T1";
-                        else if (x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr))
+                        else if (x - 1 >= 0 && targetChar.Contains(worldData[x - 1, y].repr))
                             updatedRoad[x, y] = "T3";
                         else updatedRoad[x, y] = "SV";
                     }
 
                     // T2 && T4 Horizontal T Junctions and Horizontal straights
-                    else if ((x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr)) && (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr)))
+                    else if ((x - 1 >= 0 && targetChar.Contains(worldData[x - 1, y].repr)) && (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr)))
                     {
                         if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
                             updatedRoad[x, y] = "T4";
-                        else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
+                        else if (y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "T2";
                         else updatedRoad[x, y] = "SH";
                     }
@@ -199,22 +199,22 @@ public class MapGenerator
                     {
                         if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
                             updatedRoad[x, y] = "C1";
-                        else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
+                        else if (y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "C4";
                         else updatedRoad[x, y] = "E1"; // If not its a dead end
                     }
-                    else if (x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr))
+                    else if (x - 1 >= 0 && targetChar.Contains(worldData[x - 1, y].repr))
                     {
                         if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
                             updatedRoad[x, y] = "C2";
-                        else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
+                        else if (y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr))
                             updatedRoad[x, y] = "C3";
                         else updatedRoad[x, y] = "E3"; // If not its a dead end
                     }
-                    else if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
-                        updatedRoad[x, y] = "E4";
-                    else if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
+                    else if (y - 1 >= 0 && targetChar.Contains(worldData[x, y - 1].repr))
                         updatedRoad[x, y] = "E2";
+                    else if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
+                        updatedRoad[x, y] = "E4";
                 }
             }
         }
