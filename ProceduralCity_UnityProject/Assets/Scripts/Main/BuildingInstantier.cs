@@ -28,26 +28,23 @@ public class BuildingInstantier
                 // If we find a road
                 if (worldData[x, y].repr == "H")
                 {
-                    if(rnd.Next(10) > dropoutRate)
+                    if (rnd.Next(10) > dropoutRate)
                     {
                         GameObject connectedRoad;
                         int rotation;
 
                         if (ComputeAngle(x, y, worldData, out connectedRoad, out rotation))
                         {
-                            if(connectedRoad != null)
+                            if (connectedRoad != null)
                             {
-                                Debug.Log(connectedRoad.name);
-                                Debug.Log(rotation);
-
                                 if (worldData[x, y].density > 0.5)
                                 {
                                     int height = rnd.Next(2, (int)(10 * worldData[x, y].density));
-                                    CreateBuilding(x, y, height, connectedRoad, rotation);
+                                    CreateBuilding(x, y, height, connectedRoad, rotation, worldData[x, y].density);
                                 }
                                 else
                                 {
-                                    CreateHouse(x, y, connectedRoad, rotation);
+                                    CreateHouse(x, y, connectedRoad, rotation, worldData[x, y].density);
                                 }
                             }
                         }
@@ -60,23 +57,23 @@ public class BuildingInstantier
     private void AsignWaypoint(GameObject build, GameObject road, int angle)
     {
         Housing housing = build.GetComponent<Housing>();
-        if(angle == 0)
+        if (angle == 0)
         {
             //Waypoint w = road.transform.Find("RightIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "LeftIn", "TopOut" });
-            if(w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+            if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
         }
-        else if(angle == 90)
+        else if (angle == 90)
         {
             //Waypoint w = road.transform.Find("TopIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "BottomIn", "RightOut" });
-            if(w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+            if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
         }
         else if (angle == 180)
         {
             //Waypoint w = road.transform.Find("LeftIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "RightIn", "BottomOut" });
-            if(w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+            if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
         }
         else if (angle == 270)
         {
@@ -90,7 +87,6 @@ public class BuildingInstantier
     {
         foreach (string name in names)
         {
-            Debug.Log(parent);
             Transform waypoint = parent.transform.Find(name);
             if (waypoint != null) return waypoint.gameObject;
         }
@@ -108,25 +104,25 @@ public class BuildingInstantier
                                                        "E1", "E2","E3", "E4", "C1", "C2", "C3",
                                                        "C4" };
 
-        if(y-1 > 0 && targetChar.Contains(worldData[x,y-1].repr))
+        if (y - 1 > 0 && targetChar.Contains(worldData[x, y - 1].repr))
         {
             rotations.Add(0);
             surroundingRound.Add(worldData[x, y - 1].model);
         }
-        if (y+1 < worldSize && targetChar.Contains(worldData[x, y+1].repr))
+        if (y + 1 < worldSize && targetChar.Contains(worldData[x, y + 1].repr))
         {
             rotations.Add(180);
-            surroundingRound.Add(worldData[x, y+1].model);
+            surroundingRound.Add(worldData[x, y + 1].model);
         }
-        if (x-1 > 0 && targetChar.Contains(worldData[x-1, y].repr))
+        if (x - 1 > 0 && targetChar.Contains(worldData[x - 1, y].repr))
         {
             rotations.Add(90);
-            surroundingRound.Add(worldData[x-1, y].model);
+            surroundingRound.Add(worldData[x - 1, y].model);
         }
-        if (x+1 < worldSize && targetChar.Contains(worldData[x+1, y].repr))
+        if (x + 1 < worldSize && targetChar.Contains(worldData[x + 1, y].repr))
         {
             rotations.Add(270);
-            surroundingRound.Add(worldData[x+1, y].model);
+            surroundingRound.Add(worldData[x + 1, y].model);
         }
 
         int choice = rnd.Next(0, rotations.Count);
@@ -143,7 +139,7 @@ public class BuildingInstantier
         }
     }
 
-    public void CreateBuilding(int x, int y, int height, GameObject connectedRoad, int angle = 0, int worldSize = 100)
+    public void CreateBuilding(int x, int y, int height, GameObject connectedRoad, int angle, float density, int worldSize = 100)
     {
         // Choose style
         List<GameObject> floors = rnd.Next(0, 2) == 0 ? floors1 : floors2;
@@ -180,10 +176,12 @@ public class BuildingInstantier
         }
 
         AsignWaypoint(rdc, connectedRoad, angle);
-        rdc.GetComponent<Housing>().nbFloors = height;
-    }
+        Housing housing = rdc.GetComponent<Housing>();
+        housing.nbFloors = height;
+        housing.density = density;
+    } 
 
-    public void CreateHouse(int x, int y, GameObject connectedRoad, int angle = 0, int worldSize = 100)
+    public void CreateHouse(int x, int y, GameObject connectedRoad, int angle, float density, int worldSize = 100)
     {
         // Dropping ground
         GameObject groundPrefab = grounds[rnd.Next(0, grounds.Count)];
@@ -202,7 +200,9 @@ public class BuildingInstantier
         rdc.transform.parent = g.transform;
 
         AsignWaypoint(rdc, connectedRoad, angle);
-        rdc.GetComponent<Housing>().nbFloors = 1;
+        Housing housing = rdc.GetComponent<Housing>();
+        housing.nbFloors = 1;
+        housing.density = density;
     }
 
     public Vector2Int ComputePosition(Vector2Int coordinates, int worldSize, GameObject road)

@@ -13,15 +13,24 @@ public class Housing : MonoBehaviour
     public int nbInhabitants;
     public int nbWorkers;
 
+    public int habitantCount;
+    public int workersCount;
+
     public Waypoint CarPosition;
 
     void Start()
     {
+
+        habitantCount = 0;
+        workersCount = 0;
+
         int range = Mathf.RoundToInt(density * 10);
+        Debug.Log(range);
         if (house) nbInhabitants = Random.Range(1, 5);
         else nbInhabitants = Random.Range(0, range);
 
         if (house) nbWorkers = Random.Range(0, 2);
         else nbWorkers = Random.Range(10, range * nbFloors);
     }
+
 }
