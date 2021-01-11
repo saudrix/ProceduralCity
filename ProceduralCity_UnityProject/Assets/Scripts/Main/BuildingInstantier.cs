@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public class BuildingInstantier
 {
+    public GameObject buildParent;
+
     public List<GameObject> grounds;
     public List<GameObject> rdcs;
     public List<GameObject> floors1;
@@ -150,6 +152,7 @@ public class BuildingInstantier
         Vector2Int ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, groundPrefab);
         GameObject g = GameObject.Instantiate(groundPrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
         g.transform.Rotate(new Vector3(-90, angle, 0));
+        g.transform.parent = buildParent.transform;
         g.isStatic = true;
         // Computing Ground height
         Renderer groundRenderer = g.GetComponent<Renderer>();
@@ -159,6 +162,7 @@ public class BuildingInstantier
         ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, rdcPrefab);
         GameObject rdc = GameObject.Instantiate(rdcPrefab, new Vector3(ActualPos.x, groundLevel, ActualPos.y), Quaternion.identity);
         rdc.transform.Rotate(new Vector3(-90, angle, 0));
+        rdc.transform.parent = g.transform;
         rdc.isStatic = true;
         // Computing First floor height
         Renderer rdcRenderer = rdc.GetComponent<Renderer>();
@@ -171,6 +175,7 @@ public class BuildingInstantier
             ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, floorPrefab);
             GameObject floor = GameObject.Instantiate(floorPrefab, new Vector3(ActualPos.x, yPos, ActualPos.y), Quaternion.identity);
             floor.transform.Rotate(new Vector3(-90, angle, 0));
+            floor.transform.parent = rdc.transform;
             floor.isStatic = true;
         }
 
@@ -185,6 +190,7 @@ public class BuildingInstantier
         Vector2Int ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, groundPrefab);
         GameObject g = GameObject.Instantiate(groundPrefab, new Vector3(ActualPos.x, 0, ActualPos.y), Quaternion.identity);
         g.transform.Rotate(new Vector3(-90, 0, 0));
+        g.transform.parent = buildParent.transform;
         // Computing Ground height
         Renderer groundRenderer = g.GetComponent<Renderer>();
         float groundLevel = groundRenderer.bounds.size.y;
@@ -193,6 +199,7 @@ public class BuildingInstantier
         ActualPos = ComputePosition(new Vector2Int(x, y), worldSize, housePrefab);
         GameObject rdc = GameObject.Instantiate(housePrefab, new Vector3(ActualPos.x, groundLevel, ActualPos.y), Quaternion.identity);
         rdc.transform.Rotate(new Vector3(-90, angle, 0));
+        rdc.transform.parent = g.transform;
 
         AsignWaypoint(rdc, connectedRoad, angle);
         rdc.GetComponent<Housing>().nbFloors = 1;

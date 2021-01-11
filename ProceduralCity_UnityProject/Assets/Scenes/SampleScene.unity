@@ -1564,6 +1564,7 @@ MonoBehaviour:
     - {fileID: 7391259465792062831, guid: 268494e9884fc6d409bd1cd8a0d7cb6a, type: 3}
     roadParent: {fileID: 852551965}
   buildingInstantier:
+    buildParent: {fileID: 1646384846}
     grounds:
     - {fileID: 2611192001000905861, guid: c19142d7ba073174ca7ef09344cbe07a, type: 3}
     rdcs:
@@ -1580,6 +1581,7 @@ MonoBehaviour:
     - {fileID: 6502192864516651814, guid: c3647a4a9903e0c43a9b40a8a193ec82, type: 3}
     - {fileID: 6875153856174415119, guid: f07f4413ee5dc4f46bed16527572afd8, type: 3}
     - {fileID: 5364499815158215692, guid: 993b8550fa9c69b4ea27eadf89679eec, type: 3}
+    dropoutRate: 3
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0
@@ -1918,6 +1920,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6494073285133368990, guid: 50993de53dbac8f4fb456be30c278291, type: 3}
   m_PrefabInstance: {fileID: 1507298543}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1646384846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1646384847}
+  m_Layer: 0
+  m_Name: BuildParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1646384847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646384846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.083918, y: -0.30264103, z: -50.148277}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1679607637
 PrefabInstance:
   m_ObjectHideFlags: 0
