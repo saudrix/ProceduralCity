@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7654219651928760378}
   - component: {fileID: 6743748661446455199}
   - component: {fileID: 8823234348998777685}
+  - component: {fileID: 7444658279345770550}
   m_Layer: 0
   m_Name: rdc_1
   m_TagString: Untagged
@@ -81,3 +82,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7444658279345770550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7021833737049963136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfa72c39626002547af979af58b58115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  house: 0
+  density: 0
+  nbFloors: 0
+  nbInhabitants: 0
+  nbWorkers: 0
+  CarPosition: {fileID: 0}
