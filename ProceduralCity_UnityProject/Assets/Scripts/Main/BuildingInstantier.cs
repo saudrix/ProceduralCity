@@ -18,8 +18,9 @@ public class BuildingInstantier
 
     System.Random rnd = new System.Random();
 
-    public void CreateBuildings(SimData[,] worldData)
+    public List<GameObject> CreateBuildings(SimData[,] worldData)
     {
+        List<GameObject> buildings = new List<GameObject>();
         int worldSize = worldData.GetLength(0);
         for (int y = 0; y < worldSize; y++)
         {
@@ -40,11 +41,11 @@ public class BuildingInstantier
                                 if (worldData[x, y].density > 0.5)
                                 {
                                     int height = rnd.Next(2, (int)(10 * worldData[x, y].density));
-                                    CreateBuilding(x, y, height, connectedRoad, rotation, worldData[x, y].density);
+                                    buildings.Add(CreateBuilding(x, y, height, connectedRoad, rotation, worldData[x, y].density));
                                 }
                                 else
                                 {
-                                    CreateHouse(x, y, connectedRoad, rotation, worldData[x, y].density);
+                                    buildings.Add(CreateHouse(x, y, connectedRoad, rotation, worldData[x, y].density));
                                 }
                             }
                         }
@@ -52,6 +53,7 @@ public class BuildingInstantier
                 }
             }
         }
+        return buildings;
     }
 
     private void AsignWaypoint(GameObject build, GameObject road, int angle)
@@ -139,7 +141,7 @@ public class BuildingInstantier
         }
     }
 
-    public void CreateBuilding(int x, int y, int height, GameObject connectedRoad, int angle, float density, int worldSize = 100)
+    public GameObject CreateBuilding(int x, int y, int height, GameObject connectedRoad, int angle, float density, int worldSize = 100)
     {
         // Choose style
         List<GameObject> floors = rnd.Next(0, 2) == 0 ? floors1 : floors2;
@@ -179,9 +181,11 @@ public class BuildingInstantier
         Housing housing = rdc.GetComponent<Housing>();
         housing.nbFloors = height;
         housing.density = density;
+
+        return rdc;
     } 
 
-    public void CreateHouse(int x, int y, GameObject connectedRoad, int angle, float density, int worldSize = 100)
+    public GameObject CreateHouse(int x, int y, GameObject connectedRoad, int angle, float density, int worldSize = 100)
     {
         // Dropping ground
         GameObject groundPrefab = grounds[rnd.Next(0, grounds.Count)];
@@ -203,6 +207,8 @@ public class BuildingInstantier
         Housing housing = rdc.GetComponent<Housing>();
         housing.nbFloors = 1;
         housing.density = density;
+
+        return rdc;
     }
 
     public Vector2Int ComputePosition(Vector2Int coordinates, int worldSize, GameObject road)

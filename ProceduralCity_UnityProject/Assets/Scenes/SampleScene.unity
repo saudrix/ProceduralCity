@@ -1582,6 +1582,9 @@ MonoBehaviour:
     - {fileID: 6875153856174415119, guid: f07f4413ee5dc4f46bed16527572afd8, type: 3}
     - {fileID: 5364499815158215692, guid: 993b8550fa9c69b4ea27eadf89679eec, type: 3}
     dropoutRate: 3
+  popSpawner:
+    popSize: 10
+    charactersPrefabs: []
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0

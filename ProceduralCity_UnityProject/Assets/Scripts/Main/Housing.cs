@@ -33,4 +33,17 @@ public class Housing : MonoBehaviour
         else nbWorkers = Random.Range(10, range * nbFloors);
     }
 
+    public void AddWorker() { workersCount++;  }
+
+    public void AddHabitant() { habitantCount++; }
+
+    public bool ElectableAsLifePlace()
+    {
+        return habitantCount < nbInhabitants;
+    }
+
+    public bool ElectableAsWorkPlace()
+    {
+        return workersCount < nbWorkers;
+    }
 }

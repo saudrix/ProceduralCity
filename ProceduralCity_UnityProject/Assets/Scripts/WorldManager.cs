@@ -23,6 +23,12 @@ public class WorldManager : MonoBehaviour
     public RoadInstantier roadInstantier = new RoadInstantier();
     public BuildingInstantier buildingInstantier = new BuildingInstantier();
     public RoadConnector roadConnector = new RoadConnector();
+    public PopulationSpawner popSpawner = new PopulationSpawner();
+
+    List<GameObject> structures = new List<GameObject>();
+
+    int debugTime = 0;
+    int lastTime = 0;
 
     void Start()
     {
@@ -35,39 +41,21 @@ public class WorldManager : MonoBehaviour
         roadInstantier.CreateRoads(worldData);
         roadConnector.ConnectRoads(worldData);
 
-        buildingInstantier.CreateBuildings(worldData);
+        structures = buildingInstantier.CreateBuildings(worldData);
+
+        popSpawner.CreatePopulation(structures); 
     }
 
     void Update()
     {
+        debugTime = Mathf.RoundToInt(timeOfDay);
         timeOfDay += Time.deltaTime / timeManagment;
         timeOfDay %= 24;
-    }
 
-    void OnDrawGizmos()
-    {
-        if (enableDebug && worldData != null)
-            for (int x = 0; x < worldSize; x++)
-                for (int y = 0; y < worldSize; y++)
-                {
-                    if (worldData[x, y].repr != null)
-                    {
-                        if (worldData[x, y].repr == "I") Gizmos.color = Color.magenta;
-                        else if (worldData[x, y].repr == "SV" || worldData[x, y].repr == "SH") Gizmos.color = Color.cyan;
-                        else if (worldData[x, y].repr.Contains("T")) Gizmos.color = Color.red;
-                        else if (worldData[x, y].repr.Contains("E")) Gizmos.color = Color.green;
-                        else if (worldData[x, y].repr.Contains("C")) Gizmos.color = Color.yellow;
-                        else if (worldData[x, y].repr == "A") Gizmos.color = Color.blue;
-                        else if (worldData[x, y].repr == "H") Gizmos.color = Color.grey;
-                        else if (worldData[x, y].repr == "R") Gizmos.color = Color.black;
-                        Gizmos.DrawSphere(new Vector3(x - worldSize / 2, 0, y - worldSize / 2), 0.5f);
-                    }
-                    if(drawDensity)
-                    {
-                        Gizmos.color = Color.gray * worldData[x, y].density;
-                        Gizmos.DrawSphere(new Vector3(x - worldSize / 2, 0, y - worldSize / 2), 0.5f);
-                    }
-                }
+        if(lastTime != debugTime)
+        {
+            Debug.Log("Hour = " + debugTime);
+            lastTime = debugTime;
+        }
     }
-
 }
