@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+
 public class Node : IEquatable<Node>
 {
     public Vector2Int Pos { get; set; }
@@ -106,6 +108,7 @@ public class Astar
         return Math.Abs(n2.x - n1.x) + Math.Abs(n2.y - n1.y);
     }
 
+    
     List<Vector2Int> Unpile(Node n)
     {
         List<Vector2Int> result = new List<Vector2Int>();
@@ -117,6 +120,7 @@ public class Astar
         return result;
     }
 
+    
     List<Vector2Int> AllowedNeighbors(Vector2Int pos)
     {
         List<Vector2Int> neigbhors = new List<Vector2Int>();
