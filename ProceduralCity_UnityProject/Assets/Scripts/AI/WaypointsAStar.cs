@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class WaypointNode : IEquatable<WaypointNode>
 {
-    public Vector3 Pos { get { return waypoint.transform.position; } }
-
     public Waypoint waypoint { get; set; }
     public WaypointNode Parent { get; set; }
     public float H { get; set; }
@@ -52,22 +50,27 @@ public class WaypointsAStar
 
         int maxIter = 0;
 
-        while (maxIter < 500 && !closedSet.Contains(endNode))
+        while (maxIter < 100 && !closedSet.Contains(endNode))
         {
             openSet = openSet.OrderBy(node => node.F).ToList();
+
             WaypointNode current = openSet[0];
 
             if (current.waypoint == end)
                 return Unpile(current);
             foreach (Waypoint n in current.waypoint.next)
             {
-                WaypointNode neigbhor = new WaypointNode(n, current, current.C + EuclideanDist(n.transform.position, current.Pos));
-                if (!closedSet.Contains(neigbhor) || !FindBest(neigbhor, openSet))
+                if(n != null)
                 {
-                    neigbhor.H = EuclideanDist(neigbhor.Pos, endNode.Pos);
-                    neigbhor.F = neigbhor.H + neigbhor.C;
-                    //Debug.Log(neigbhor.F);
-                    openSet.Insert(0, neigbhor);
+                    //WaypointNode neigbhor = new WaypointNode(n, current, current.C + EuclideanDist(n.transform.position, current.Pos));
+                    WaypointNode neigbhor = new WaypointNode(n, current, current.C + 1);
+                    if (!closedSet.Contains(neigbhor) || !FindBest(neigbhor, openSet))
+                    {
+                        neigbhor.H = EuclideanDist(neigbhor.waypoint.transform.position, endNode.waypoint.transform.position);
+                        neigbhor.F = neigbhor.H + neigbhor.C;
+                        //Debug.Log(neigbhor.F);
+                        openSet.Insert(0, neigbhor);
+                    }
                 }
             }
             openSet.Remove(current);
@@ -89,7 +92,7 @@ public class WaypointsAStar
 
     float EuclideanDist(Vector3 w1, Vector3 w2)
     {
-        return (float)Math.Sqrt(Math.Pow((w1.x * w2.x), 2) + Math.Pow((w1.y * w2.y), 2));
+        return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
     }
 
     List<Waypoint> Unpile(WaypointNode w)

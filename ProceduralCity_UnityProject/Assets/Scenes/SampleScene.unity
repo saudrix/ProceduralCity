@@ -1526,8 +1526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc430f05ac67d04a9c0b3fd29f899f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawn: 0
   timeManagment: 30
-  enableDebug: 0
+  drawDensity: 0
   worldSize: 100
   mapGenerator:
     densityFrenquency: 5
@@ -1583,8 +1584,12 @@ MonoBehaviour:
     - {fileID: 5364499815158215692, guid: 993b8550fa9c69b4ea27eadf89679eec, type: 3}
     dropoutRate: 3
   popSpawner:
-    popSize: 10
-    charactersPrefabs: []
+    popSize: 1
+    charactersPrefabs:
+    - {fileID: 7999561476310002564, guid: 04b458fcdb6e8e54fa3d6c2ff69e07c9, type: 3}
+    carPrefabsBody:
+    - {fileID: 463036029495256674, guid: 0a36e6c8f4b46724fb28399b372425f1, type: 3}
+    carPrefab: {fileID: 3556821771903332091, guid: 20c4e9861dc7738459f3d5421705f951, type: 3}
 --- !u!4 &1347994634
 Transform:
   m_ObjectHideFlags: 0

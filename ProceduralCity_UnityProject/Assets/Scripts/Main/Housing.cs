@@ -25,7 +25,6 @@ public class Housing : MonoBehaviour
         workersCount = 0;
 
         int range = Mathf.RoundToInt(density * 10);
-        Debug.Log(range);
         if (house) nbInhabitants = Random.Range(1, 5);
         else nbInhabitants = Random.Range(0, range);
 

@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class CarAI : MonoBehaviour
 {
+    public event Action AsArrived;
+
     [SerializeField]
     private List<Waypoint> path;
     [SerializeField]
@@ -129,7 +131,7 @@ public class CarAI : MonoBehaviour
         if (index >= path.Count)
         {
             Stop = true;
-            Destroy(gameObject);
+            AsArrived?.Invoke();
         }
         else
         {

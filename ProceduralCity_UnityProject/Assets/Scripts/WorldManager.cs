@@ -5,12 +5,10 @@ using System;
 
 public class WorldManager : MonoBehaviour
 {
+    public bool spawn;
+
     public static float timeOfDay = 0;
     public int timeManagment = 100;
-    // Modular parameters
-    [SerializeField]
-    bool enableDebug = false;
-    bool drawDensity = false;
 
     // World data information
     [SerializeField]
@@ -43,7 +41,8 @@ public class WorldManager : MonoBehaviour
 
         structures = buildingInstantier.CreateBuildings(worldData);
 
-        popSpawner.CreatePopulation(structures); 
+        Debug.Log("World created");
+
     }
 
     void Update()
@@ -52,10 +51,12 @@ public class WorldManager : MonoBehaviour
         timeOfDay += Time.deltaTime / timeManagment;
         timeOfDay %= 24;
 
-        if(lastTime != debugTime)
+        if (lastTime != debugTime)
         {
             Debug.Log("Hour = " + debugTime);
             lastTime = debugTime;
         }
+
+        if (spawn) { spawn = false; popSpawner.CreatePopulation(structures);}
     }
 }

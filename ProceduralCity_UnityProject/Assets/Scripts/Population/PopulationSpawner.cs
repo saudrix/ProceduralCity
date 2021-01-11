@@ -7,9 +7,11 @@ using UnityEngine;
 [Serializable]
 public class PopulationSpawner
 {
-
     public int popSize;
+    
     public List<GameObject> charactersPrefabs;
+    public List<GameObject> carPrefabsBody;
+    public GameObject carPrefab;
 
     WaypointsAStar AstarFinder = new WaypointsAStar("starFinder");
 
@@ -18,6 +20,7 @@ public class PopulationSpawner
         for(int i = 0; i < popSize; i++)
         {
             CreatePerson(structures);
+            Debug.Log(i + " person created");
         }
     }
 
@@ -32,7 +35,8 @@ public class PopulationSpawner
             {
                 structure.AddHabitant();
                 home = structure.gameObject;
-            }            
+            }
+            Debug.Log("Searching for a house");
         }
         // Chosing a connectable workplace
         GameObject work = null;
@@ -42,12 +46,16 @@ public class PopulationSpawner
             Housing structure = structures[UnityEngine.Random.Range(0, structures.Count - 1)].GetComponent<Housing>();
             if (structure.ElectableAsWorkPlace())
             {
-                aStarResult = AstarFinder.AStar(home.GetComponent<Housing>().CarPosition, structure.CarPosition);
-                if (aStarResult != null)
+                if(home.GetComponent<Housing>().CarPosition != null && structure.CarPosition != null)
                 {
-                    work = structure.gameObject;
+                    aStarResult = AstarFinder.AStar(home.GetComponent<Housing>().CarPosition, structure.CarPosition);
+                    if (aStarResult != null)
+                    {
+                        work = structure.gameObject;
+                    }
                 }
             }
+            Debug.Log("Searching for a work place");
 
         }
         // Instantiate a person
@@ -55,8 +63,13 @@ public class PopulationSpawner
         GameObject person = GameObject.Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
 
         Inhabitant personManager = person.GetComponent<Inhabitant>();
-        personManager.livingPlace = home;
-        personManager.workPlace = work;
+        personManager.livingPlace = home.GetComponent<Housing>();
+        personManager.workPlace = work.GetComponent<Housing>();
         personManager.roadToWork = aStarResult;
+
+        // if it has a car creates it
+        GameObject carPrefEmpty = GameObject.Instantiate(carPrefab);
+        GameObject carBody = GameObject.Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0,.1f,0), Quaternion.Euler(0,0,0), carPrefEmpty.transform);
+        personManager.SetCar(carPrefEmpty);
     }
 }
