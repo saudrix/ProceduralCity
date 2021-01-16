@@ -41,11 +41,11 @@ public class BuildingInstantier
                                 if (worldData[x, y].density > 0.5)
                                 {
                                     int height = rnd.Next(2, (int)(10 * worldData[x, y].density));
-                                    buildings.Add(CreateBuilding(x, y, height, connectedRoad, rotation, worldData[x, y].density));
+                                    buildings.Add(CreateBuilding(x, y, height, connectedRoad, rotation, worldData[x, y].density, worldSize));
                                 }
                                 else
                                 {
-                                    buildings.Add(CreateHouse(x, y, connectedRoad, rotation, worldData[x, y].density));
+                                    buildings.Add(CreateHouse(x, y, connectedRoad, rotation, worldData[x, y].density, worldSize));
                                 }
                             }
                         }

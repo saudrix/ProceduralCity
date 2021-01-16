@@ -61,8 +61,9 @@ public class MapGenerator
         int nbIntersect = 0;
         int interDist = 2;
         int worldSize = worldData.GetLength(0);
+        int safe = 1000;
 
-        while (nbIntersect < sampleCount)
+        while (nbIntersect < sampleCount && safe > 0)
         {
             int rnX = UnityEngine.Random.Range(0, worldSize);
             int rnY = UnityEngine.Random.Range(0, worldSize);
@@ -81,6 +82,7 @@ public class MapGenerator
                     }
                 }
             }
+            safe--;
         }
         return samples;
     }

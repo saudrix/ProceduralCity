@@ -6,7 +6,7 @@ using System;
 [Serializable]
 public class RoadInstantier
 {
-    public GameObject I_road;
+    public List<GameObject> I_roads;
 
     public List<GameObject> T1_roads;
     public List<GameObject> T2_roads;
@@ -44,7 +44,8 @@ public class RoadInstantier
                 switch (worldData[x, y].repr)
                 {
                     case "I":
-                        roads.Add(AddRoad(I_road,x,y,0, worldSize, worldData, roadParent));
+                        GameObject I_road_prefab = I_roads[random.Next(0, I_roads.Count)];
+                        roads.Add(AddRoad(I_road_prefab, x, y, 0, worldSize, worldData, roadParent));
                         break;
 
                     case "T1":

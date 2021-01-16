@@ -63,8 +63,15 @@ public class PopulationSpawner
         GameObject person = GameObject.Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
 
         Inhabitant personManager = person.GetComponent<Inhabitant>();
+
         personManager.livingPlace = home.GetComponent<Housing>();
         personManager.workPlace = work.GetComponent<Housing>();
+
+        //home.transform.position = new Vector3(home.transform.position.x, 10, home.transform.position.z);
+        //work.transform.position = new Vector3(work.transform.position.x, 10, work.transform.position.z);
+
+        personManager.roadToWork = aStarResult;
+        aStarResult.Reverse();
         personManager.roadToWork = aStarResult;
 
         // if it has a car creates it

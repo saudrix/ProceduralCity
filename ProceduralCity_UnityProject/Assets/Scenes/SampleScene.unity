@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128162123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -60}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
@@ -1527,18 +1527,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawn: 0
-  timeManagment: 30
-  drawDensity: 0
-  worldSize: 100
+  timeManagment: 10
+  worldSize: 50
   mapGenerator:
     densityFrenquency: 5
-    maxSample: 200
-    maxLowSample: 100
+    maxSample: 40
+    maxLowSample: 20
   roadInstantier:
-    I_road: {fileID: 488554524175839880, guid: 3e39a0fd49afe5f42bf48582f687e3cf, type: 3}
+    I_roads:
+    - {fileID: 488554524175839880, guid: 3e39a0fd49afe5f42bf48582f687e3cf, type: 3}
+    - {fileID: 4663132036261522798, guid: de8aab69d94ee5d41b7198ebd8dc9f70, type: 3}
     T1_roads:
     - {fileID: 7973087093550938214, guid: f63d7ac7222536a479e242d46b7e8963, type: 3}
-    - {fileID: 4663132036261522798, guid: de8aab69d94ee5d41b7198ebd8dc9f70, type: 3}
     T2_roads:
     - {fileID: 6325952680881806404, guid: f66f6f6bcb5f3ef4f90300631635c868, type: 3}
     T3_roads:

@@ -23,9 +23,12 @@ public class Inhabitant : MonoBehaviour
     public Housing workPlace;
 
     public List<Waypoint> roadToWork;
+    public List<Waypoint> roadToHome;
 
     GameObject car;
     CarAI carController;
+
+    ActionList lastAction;
 
     public void SetCar(GameObject car)
     {
@@ -38,6 +41,7 @@ public class Inhabitant : MonoBehaviour
     void Start()
     {
         car.SetActive(false);
+        lastAction = planning.actions[(int)WorldManager.timeOfDay];
     }
 
     void Update()
@@ -47,18 +51,22 @@ public class Inhabitant : MonoBehaviour
 
     private void Act(int timeOfDay)
     {
-        Debug.Log(planning.actions[timeOfDay]);
-
         ActionList action = planning.actions[timeOfDay];
-        switch(action)
+        if(action != lastAction)
         {
-            case ActionList.GoToWork:
-                leftHome?.Invoke();
-                car.SetActive(true);
-                car.transform.position = livingPlace.CarPosition.transform.position;
-                carController.setPath(roadToWork);
-                carController.AsArrived += ArrivedToWork;
-                break;
+
+            Debug.Log(action);
+            switch (action)
+            {
+                case ActionList.GoToWork:
+                    leftHome?.Invoke();
+                    car.SetActive(true);
+                    car.transform.position = livingPlace.CarPosition.transform.position;
+                    carController.setPath(roadToWork);
+                    carController.AsArrived += ArrivedToWork;
+                    break;
+            }
+            lastAction = action;
         }
     }
 
