@@ -17,6 +17,10 @@ public class Inhabitant : MonoBehaviour
     public event Action leftHome;
     public event Action comeHome;
 
+    public event Action leftWork;
+    public event Action comeWork;
+
+
     public Schedule planning;
 
     public Housing livingPlace;
@@ -65,16 +69,31 @@ public class Inhabitant : MonoBehaviour
                     carController.setPath(roadToWork);
                     carController.AsArrived += ArrivedToWork;
                     break;
+
+                case ActionList.GoToHome:
+                    leftWork?.Invoke();
+                    car.SetActive(true);
+                    car.transform.position = workPlace.CarPosition.transform.position;
+                    carController.setPath(roadToHome);
+                    carController.AsArrived += ArrivedToWork;
+                    break;
             }
             lastAction = action;
         }
+    }
+
+    private void ArrivedToHome()
+    {
+        car.SetActive(false);
+        carController.AsArrived -= ArrivedToHome;
+        comeHome?.Invoke();
     }
 
     private void ArrivedToWork()
     {
         car.SetActive(false);
         carController.AsArrived -= ArrivedToWork;
-        Debug.Log("Arrived To Work");
+        comeWork?.Invoke();
     }
 
     // Camera rig follow path reference

@@ -20,7 +20,8 @@ public class WorldManager : MonoBehaviour
     public RoadInstantier roadInstantier = new RoadInstantier();
     public BuildingInstantier buildingInstantier = new BuildingInstantier();
     public RoadConnector roadConnector = new RoadConnector();
-    public PopulationSpawner popSpawner = new PopulationSpawner();
+    
+    public PopulationSpawner popSpawner;
 
     List<GameObject> structures = new List<GameObject>();
 
@@ -56,6 +57,6 @@ public class WorldManager : MonoBehaviour
             lastTime = debugTime;
         }
 
-        if (spawn) { spawn = false; popSpawner.CreatePopulation(structures);}
+        if (spawn) { spawn = false; popSpawner.CreatePopulation(structures); };
     }
 }

@@ -60,6 +60,7 @@ public class WaypointsAStar
         {
             openSet = openSet.OrderBy(node => node.F).ToList();
 
+            if (openSet.Count == 0) return null;
             WaypointNode current = openSet[0];
 
             // if the destination is found return the path

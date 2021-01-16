@@ -52,8 +52,6 @@ public class CarAI : MonoBehaviour
     {
         if (path.Count == 0)
         {
-            // To be modified To instantiate a person
-            Destroy(gameObject);
             return;
         }
         this.path = path;
