@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Node class encapsulating a Waypoint to create a navigation graph for the AStar Algorithm
+/// </summary>
 public class WaypointNode : IEquatable<WaypointNode>
 {
     public Waypoint waypoint { get; set; }
@@ -32,6 +35,9 @@ public class WaypointNode : IEquatable<WaypointNode>
     }
 }
 
+/// <summary>
+/// A class to compute AStar in a waypoint graph
+/// </summary>
 public class WaypointsAStar
 {
     public string Name { get; set; }
@@ -48,7 +54,7 @@ public class WaypointsAStar
         List<WaypointNode> openSet = new List<WaypointNode>() { startNode };
         List<WaypointNode> closedSet = new List<WaypointNode>();
 
-        int maxIter = 0;
+        int maxIter = 0; //A failsafe to avoid infinite loops due to lack of convergence
 
         while (maxIter < 100 && !closedSet.Contains(endNode))
         {
@@ -56,6 +62,7 @@ public class WaypointsAStar
 
             WaypointNode current = openSet[0];
 
+            // if the destination is found return the path
             if (current.waypoint == end)
                 return Unpile(current);
             foreach (Waypoint n in current.waypoint.next)
@@ -90,11 +97,13 @@ public class WaypointsAStar
         return false;
     }
 
+    // Compute the euclidean distance between two Vector3
     float EuclideanDist(Vector3 w1, Vector3 w2)
     {
         return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
     }
 
+    // Convert the last Node to the all path using the parenting relationship
     List<Waypoint> Unpile(WaypointNode w)
     {
         List<Waypoint> result = new List<Waypoint>();
