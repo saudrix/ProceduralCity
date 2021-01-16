@@ -15,7 +15,6 @@ public class WorldManager : MonoBehaviour
     int worldSize = 100;
     private SimData[,] worldData;
 
-    // Debug Plane
     // Useful classes
     public MapGenerator mapGenerator = new MapGenerator();
     public RoadInstantier roadInstantier = new RoadInstantier();
