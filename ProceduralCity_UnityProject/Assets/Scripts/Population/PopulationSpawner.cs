@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -15,11 +16,9 @@ public class PopulationSpawner : MonoBehaviour
     public List<GameObject> carPrefabsBody;
     public GameObject carPrefab;
 
-    WaypointsAStar AstarFinder = new WaypointsAStar("starFinder");
-
     public void CreatePopulation(List<GameObject> structures)
     {
-        StartCoroutine("GraduallyInstantiate", structures);
+        StartCoroutine("GraduallyInstantiate",structures);
     }
 
     IEnumerator GraduallyInstantiate(List<GameObject> structures)
@@ -27,17 +26,21 @@ public class PopulationSpawner : MonoBehaviour
         Debug.Log(structures);
         for (int i = 0; i < popSize; i++) {
             Debug.Log(i);
-            CreatePerson(structures);
-            yield return new WaitForSeconds(5);
+            Debug.Log(CreatePerson(structures));
+            yield return null;
+            //yield return new WaitForSeconds(5);
         }
     }
 
-    private void CreatePerson(List<GameObject> structures)
+    private bool CreatePerson(List<GameObject> structures)
     {
+        int houseMaxIter = 0;
+
         // Choosing a house
         GameObject home = null;
         while(home == null)
         {
+            if (houseMaxIter > 1000) return false;
             Housing structure = structures[UnityEngine.Random.Range(0, structures.Count - 1)].GetComponent<Housing>();
             if (structure.ElectableAsLifePlace())
             {
@@ -45,29 +48,33 @@ public class PopulationSpawner : MonoBehaviour
                 home = structure.gameObject;
             }
             Debug.Log("Searching for a house");
+            houseMaxIter++;
         }
         // Chosing a connectable workplace
         GameObject work = null;
-        List<Waypoint> aStarResult = null;
-        List<Waypoint> aStarResultReverse = null;
 
+//        List<Waypoint> aStarResult = null;
+//        List<Waypoint> aStarResultReverse = null;
+
+        int workMaxIter = 0;
         while(work == null)
         {
+            if (workMaxIter > 1000) return false;
             Housing structure = structures[UnityEngine.Random.Range(0, structures.Count - 1)].GetComponent<Housing>();
             if (structure.ElectableAsWorkPlace())
             {
                 if(home.GetComponent<Housing>().CarPosition != null && structure.CarPosition != null)
                 {
-                    aStarResult = AstarFinder.AStar(home.GetComponent<Housing>().CarPosition, structure.CarPosition);
-                    aStarResultReverse = AstarFinder.AStar(structure.CarPosition, home.GetComponent<Housing>().CarPosition);
-                    if (aStarResult != null && aStarResultReverse != null)
-                    {
+                    //aStarResult = AstarFinder.AStar(home.GetComponent<Housing>().CarPosition, structure.CarPosition);
+                    //aStarResultReverse = AstarFinder.AStar(structure.CarPosition, home.GetComponent<Housing>().CarPosition);
+                    //if (aStarResult != null && aStarResultReverse != null)
+                    //{
                         work = structure.gameObject;
-                    }
+                    //}
                 }
             }
             Debug.Log("Searching for a work place");
-
+            workMaxIter++;
         }
         // Instantiate a person
         GameObject selectedPrefab = charactersPrefabs[UnityEngine.Random.Range(0, charactersPrefabs.Count - 1)];
@@ -78,21 +85,30 @@ public class PopulationSpawner : MonoBehaviour
         personManager.livingPlace = home.GetComponent<Housing>();
         personManager.workPlace = work.GetComponent<Housing>();
 
+        personManager.planning = allPlannings[UnityEngine.Random.Range(0, allPlannings.Count - 1)];
+
+        personManager.asCar = UnityEngine.Random.Range(0, 0) == 0 ? true : false;
+
+        // if it has a car creates it
+        if (personManager.asCar)
+        {
+            GameObject carPrefEmpty = GameObject.Instantiate(carPrefab);
+            GameObject carBody = GameObject.Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0, .1f, 0), Quaternion.Euler(0, 0, 0), carPrefEmpty.transform);
+            personManager.SetCar(carPrefEmpty);
+
+        }
+        else
+        {
+            Debug.Log("PIETON");
+        }
         //home.transform.position = new Vector3(home.transform.position.x, 10, home.transform.position.z);
         //work.transform.position = new Vector3(work.transform.position.x, 10, work.transform.position.z);
 
-        aStarResult.Reverse();
-        personManager.roadToWork = aStarResult;
-        aStarResultReverse.Reverse();
-        personManager.roadToWork = aStarResultReverse;
+        //aStarResult.Reverse();
+        //personManager.roadToWork = aStarResult;
+        //aStarResultReverse.Reverse();
+        //personManager.roadToWork = aStarResultReverse;
 
-        personManager.planning = allPlannings[UnityEngine.Random.Range(0, allPlannings.Count-1)];
-
-        // if it has a car creates it
-        GameObject carPrefEmpty = GameObject.Instantiate(carPrefab);
-        GameObject carBody = GameObject.Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0,.1f,0), Quaternion.Euler(0,0,0), carPrefEmpty.transform);
-        personManager.SetCar(carPrefEmpty);
-
-        //yield return null;
+        return true;
     }
 }

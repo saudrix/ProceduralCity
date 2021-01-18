@@ -41,15 +41,15 @@ public class WorldManager : MonoBehaviour
 
         structures = buildingInstantier.CreateBuildings(worldData);
 
+        popSpawner.CreatePopulation(structures);
         Debug.Log("World created");
-
     }
 
     void Update()
     {
         debugTime = Mathf.RoundToInt(timeOfDay);
         timeOfDay += Time.deltaTime / timeManagment;
-        timeOfDay %= 24;
+        timeOfDay %= 23;
 
         if (lastTime != debugTime)
         {
@@ -57,6 +57,6 @@ public class WorldManager : MonoBehaviour
             lastTime = debugTime;
         }
 
-        if (spawn) { spawn = false; popSpawner.CreatePopulation(structures); };
+        //if (spawn) { spawn = false; popSpawner.CreatePopulation(structures); };
     }
 }

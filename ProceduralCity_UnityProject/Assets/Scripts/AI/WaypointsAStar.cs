@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -56,7 +57,7 @@ public class WaypointsAStar
 
         int maxIter = 0; //A failsafe to avoid infinite loops due to lack of convergence
 
-        while (maxIter < 100 && !closedSet.Contains(endNode))
+        while (!closedSet.Contains(endNode) && maxIter < 5000)
         {
             openSet = openSet.OrderBy(node => node.F).ToList();
 
@@ -74,7 +75,7 @@ public class WaypointsAStar
                     WaypointNode neigbhor = new WaypointNode(n, current, current.C + 1);
                     if (!closedSet.Contains(neigbhor) || !FindBest(neigbhor, openSet))
                     {
-                        neigbhor.H = EuclideanDist(neigbhor.waypoint.transform.position, endNode.waypoint.transform.position);
+                        neigbhor.H = 1;//EuclideanDist(neigbhor.waypoint.transform.position, endNode.waypoint.transform.position);
                         neigbhor.F = neigbhor.H + neigbhor.C;
                         //Debug.Log(neigbhor.F);
                         openSet.Insert(0, neigbhor);
@@ -105,7 +106,7 @@ public class WaypointsAStar
     }
 
     // Convert the last Node to the all path using the parenting relationship
-    List<Waypoint> Unpile(WaypointNode w)
+    public List<Waypoint> Unpile(WaypointNode w)
     {
         List<Waypoint> result = new List<Waypoint>();
         while (w.Parent != null)

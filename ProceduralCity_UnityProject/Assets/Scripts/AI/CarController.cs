@@ -7,12 +7,9 @@ public class CarController : MonoBehaviour
 {
     Rigidbody rigidBody;
 
-    [SerializeField]
-    private float power = 15;
-    [SerializeField]
-    private float torque = 2f;
-    [SerializeField]
-    private float maxSpeed = 6;
+    private float power = 20;
+    private float torque = 8f;
+    private float maxSpeed = 50;
     private Vector2 movement;
 
     private void Awake()

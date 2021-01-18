@@ -12,18 +12,20 @@ public class CarAI : MonoBehaviour
     private List<Waypoint> path;
     [SerializeField]
     private GameObject rayStartingPoint = null;
-    private float safetyDistance = .2f;
+    private float safetyDistance = .1f;
 
-    private float distanceThreshold = .4f;
+    private float distanceThreshold = .5f;
     private float arrivalThreshold = .3f;
     private float angleOffset = 2;
 
-    private Vector3 currentTarget;
+    private Waypoint currentTarget;
 
     private int index = 0;
 
     private bool stop;
     private bool collisionStop = false;
+
+    Waypoint destination;
 
     public bool Stop
     {
@@ -39,16 +41,16 @@ public class CarAI : MonoBehaviour
         return index >= path.Count - 1;
     }
 
-    private void Start()
+    /*private void Start()
     {
         if (path == null || path.Count == 0) Stop = true;
         else
         {
             currentTarget = path[index].transform.position;//.GetPosition();
         }
-    }
+    }*/
 
-    public void setPath(List<Waypoint> path)
+    /*public void setPath(List<Waypoint> path)
     {
         if (path.Count == 0)
         {
@@ -58,16 +60,29 @@ public class CarAI : MonoBehaviour
         index = 0;
         currentTarget = path[index].transform.position;//.GetPosition();
 
-        Vector3 relative = transform.InverseTransformPoint(this.path[index + 1].transform.position/*.GetPosition()*/);
+        Vector3 relative = transform.InverseTransformPoint(this.path[index + 1].transform.position ); //.GetPosition());
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
+        Stop = false;
+    }*/
+
+    public void GoTo(Waypoint start, Waypoint destination)
+    {
+        currentTarget = start;
+        this.destination = destination;
+
+        Vector3 relative = transform.InverseTransformPoint(GetNextTarget().transform.position/*.GetPosition()*/);
+        float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+
         Stop = false;
     }
 
     private void Update()
     {
-        checkArrival();
+        CheckArrival();
         Drive();
         CheckCollisions();
     }
@@ -80,6 +95,7 @@ public class CarAI : MonoBehaviour
         if (Physics.Raycast(rayStartingPoint.transform.position, transform.forward, safetyDistance, 1 << gameObject.layer))
         {
             collisionStop = true;
+            Debug.Log("VOITURE");
         }
         else if (Physics.Raycast(ray, out hit, safetyDistance))
         {
@@ -88,9 +104,11 @@ public class CarAI : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("trafficLight"))
                     collisionStop = true;
             }
+            Debug.Log("FEU ROUGE");
         }
         else{
             collisionStop = false;
+            Debug.Log("NOT COLLIDING");
         }
     }
 
@@ -100,7 +118,7 @@ public class CarAI : MonoBehaviour
             OnDrive?.Invoke(Vector2.zero);
         else
         {
-            Vector3 relative = transform.InverseTransformPoint(currentTarget);
+            Vector3 relative = transform.InverseTransformPoint(currentTarget.transform.position);
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
             var rotateCar = 0;
@@ -111,19 +129,69 @@ public class CarAI : MonoBehaviour
         }
     }
 
-    private void checkArrival()
+    private void CheckArrival()
     {
         if(!Stop)
         {
             float Threshold = distanceThreshold;
-            if (index == path.Count - 1) Threshold = arrivalThreshold;
+            //if (index == path.Count - 1) Threshold = arrivalThreshold;
+            if (currentTarget == destination) Threshold = arrivalThreshold;
 
-            if (Vector3.Distance(currentTarget, transform.position) < Threshold)
+            if (Vector3.Distance(currentTarget.transform.position, transform.position) < Threshold)
                 GetNextTarget();
         }
     }
 
-    private void GetNextTarget()
+    private Waypoint GetNextTarget()
+    {
+        // Needs to be removed when elbow road are added to the sim
+        if(currentTarget.next.Count == 0)
+        {
+            Stop = true;
+            currentTarget = null;
+            destination = null;
+            AsArrived?.Invoke();
+        }
+        else if(currentTarget == destination)
+        {
+            Stop = true;
+            currentTarget = null;
+            destination = null;
+            AsArrived?.Invoke();
+        }
+        else if(currentTarget.next.Count == 1)
+        {
+            currentTarget = currentTarget.next[0];
+        }
+        else
+        {
+            currentTarget = ClosestPoint();
+        }
+        return currentTarget;
+    }
+
+    Waypoint ClosestPoint()
+    {
+        float dist = float.MaxValue;
+        int max = 0;
+        for(int i = 0; i < currentTarget.next.Count; i++)
+        {
+            float heuristic = EuclideanDist(currentTarget.transform.position, destination.transform.position);
+            if (heuristic < dist)
+            {
+                dist = heuristic;
+                max = i;
+            }
+        }
+        return currentTarget.next[max];
+    }
+
+    float EuclideanDist(Vector3 w1, Vector3 w2)
+    {
+        return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
+    }
+
+    /*private void GetNextTarget()
     {
         index++;
         if (index >= path.Count)
@@ -135,5 +203,5 @@ public class CarAI : MonoBehaviour
         {
             currentTarget = path[index].transform.position;//.GetPosition();
         }
-    }
+    }*/
 }
