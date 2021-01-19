@@ -1951,7 +1951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783e0fa68e0435b41b2ae97a2b053206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popSize: 500
+  popSize: 1
   allPlannings:
   - {fileID: 11400000, guid: 5fa868e0337bc5d4b8f2c9271692c5e6, type: 2}
   - {fileID: 11400000, guid: a45244220b7e67a4b9d38d39043d442b, type: 2}

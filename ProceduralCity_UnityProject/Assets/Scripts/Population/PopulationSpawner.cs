@@ -24,7 +24,7 @@ public class PopulationSpawner : MonoBehaviour
     IEnumerator GraduallyInstantiate(List<GameObject> structures)
     {
         Debug.Log(structures);
-        for (int i = 0; i < popSize; i++) {
+        for (int i = 0; i < popSize + 1; i++) {
             Debug.Log(i);
             Debug.Log(CreatePerson(structures));
             yield return null;

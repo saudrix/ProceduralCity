@@ -95,7 +95,7 @@ public class CarAI : MonoBehaviour
         if (Physics.Raycast(rayStartingPoint.transform.position, transform.forward, safetyDistance, 1 << gameObject.layer))
         {
             collisionStop = true;
-            Debug.Log("VOITURE");
+            //Debug.Log("VOITURE");
         }
         else if (Physics.Raycast(ray, out hit, safetyDistance))
         {
@@ -104,11 +104,11 @@ public class CarAI : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag("trafficLight"))
                     collisionStop = true;
             }
-            Debug.Log("FEU ROUGE");
+            //Debug.Log("FEU ROUGE");
         }
         else{
             collisionStop = false;
-            Debug.Log("NOT COLLIDING");
+            //Debug.Log("NOT COLLIDING");
         }
     }
 
@@ -165,6 +165,7 @@ public class CarAI : MonoBehaviour
         }
         else
         {
+            Debug.Log("Actually choosing");
             currentTarget = ClosestPoint();
         }
         return currentTarget;
@@ -176,7 +177,7 @@ public class CarAI : MonoBehaviour
         int max = 0;
         for(int i = 0; i < currentTarget.next.Count; i++)
         {
-            float heuristic = EuclideanDist(currentTarget.transform.position, destination.transform.position);
+            float heuristic = EuclideanDist(currentTarget.next[i].transform.position, destination.transform.position);
             if (heuristic < dist)
             {
                 dist = heuristic;
@@ -188,6 +189,7 @@ public class CarAI : MonoBehaviour
 
     float EuclideanDist(Vector3 w1, Vector3 w2)
     {
+        Debug.Log((float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2)));
         return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
     }
 
