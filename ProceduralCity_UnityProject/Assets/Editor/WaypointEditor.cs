@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 [InitializeOnLoad()]
 public class WaypointEditor
-{/*
-    [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable)]
-    public static void OnDrawSceneGizmos(Waypoint waypoint, GizmoType gizmoType)
+{
+
+    [DrawGizmo(GizmoType.NonSelected | GizmoType.Selected | GizmoType.Pickable | GizmoType.Active)]
+    public static void OnDrawSceneGizmo(Waypoint waypoint, GizmoType gizmoType)
     {
         if((gizmoType & GizmoType.Selected) != 0)
         {
@@ -47,5 +46,5 @@ public class WaypointEditor
             }
         }
     }
-*/
+
 }
