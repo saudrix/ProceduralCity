@@ -17,6 +17,7 @@ public class Housing : MonoBehaviour
     public int workersCount;
 
     public Waypoint CarPosition;
+    public Waypoint PedestrianPosition;
 
     void Start()
     {

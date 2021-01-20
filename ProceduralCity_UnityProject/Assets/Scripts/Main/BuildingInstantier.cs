@@ -64,24 +64,36 @@ public class BuildingInstantier
             //Waypoint w = road.transform.Find("RightIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "LeftIn", "TopOut" });
             if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+
+            w = FindEntryPoint(road, new List<string>() { "LeftIn_P", "TopOut_P" });
+            if (w != null) housing.PedestrianPosition = w.GetComponent<Waypoint>();
         }
         else if (angle == 90)
         {
             //Waypoint w = road.transform.Find("TopIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "BottomIn", "RightOut" });
             if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+
+            w = FindEntryPoint(road, new List<string>() { "BottomIn_P", "RightOut_P" });
+            if (w != null) housing.PedestrianPosition = w.GetComponent<Waypoint>();
         }
         else if (angle == 180)
         {
             //Waypoint w = road.transform.Find("LeftIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "RightIn", "BottomOut" });
             if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+
+            w = FindEntryPoint(road, new List<string>() { "RightIn_P", "BottomOut_P" });
+            if (w != null) housing.PedestrianPosition = w.GetComponent<Waypoint>();
         }
         else if (angle == 270)
         {
             //Waypoint w = road.transform.Find("BottomIn").GetComponent<Waypoint>();
             GameObject w = FindEntryPoint(road, new List<string>() { "TopIn", "LeftOut" });
             if (w != null) housing.CarPosition = w.GetComponent<Waypoint>();
+
+            w = FindEntryPoint(road, new List<string>() { "TopIn_P", "LeftOut_P" });
+            if (w != null) housing.PedestrianPosition = w.GetComponent<Waypoint>();
         }
     }
 
