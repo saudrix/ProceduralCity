@@ -12,6 +12,7 @@ public enum ActionList
     Sleep
 }
 
+[RequireComponent(typeof(PedestrianAI))]
 public class Inhabitant : MonoBehaviour
 {
     // events raised
@@ -33,11 +34,13 @@ public class Inhabitant : MonoBehaviour
     GameObject car;
     CarAI carController;
 
+    PedestrianAI controller;
+
     ActionList lastAction;
 
     public bool asCar = true;
 
-    WaypointsAStar AstarFinder = new WaypointsAStar("starFinder");
+    //WaypointsAStar AstarFinder = new WaypointsAStar("starFinder");
 
     public void SetCar(GameObject car)
     {
@@ -48,13 +51,22 @@ public class Inhabitant : MonoBehaviour
 
     void Start()
     {
-        car.SetActive(false);
+        if (asCar)
+        {
+            car.SetActive(false);
+        }
+        else
+        {
+            controller = GetComponent<PedestrianAI>();
+        }
+
         lastAction = planning.actions[(int)WorldManager.timeOfDay];
 
-        Debug.Log(livingPlace);
+        /*Debug.Log(livingPlace);
         Debug.Log(livingPlace.CarPosition);
         Debug.Log(workPlace);
         Debug.Log(workPlace.CarPosition);
+        */
 
         /*if (asCar)
         {
@@ -100,11 +112,23 @@ public class Inhabitant : MonoBehaviour
             {
                 case ActionList.GoToWork:
                     leftHome?.Invoke();
-                    car.SetActive(true);
-                    car.transform.position = livingPlace.CarPosition.transform.position;
-                    //carController.setPath(roadToWork);
-                    carController.GoTo(livingPlace.CarPosition, workPlace.CarPosition);
-                    carController.AsArrived += ArrivedToWork;
+                    if (asCar)
+                    {
+                        car.SetActive(true);
+                        car.transform.position = livingPlace.CarPosition.transform.position;
+                        //carController.setPath(roadToWork);
+                        carController.GoTo(livingPlace.CarPosition, workPlace.CarPosition);
+                        carController.AsArrived += ArrivedToWork;
+                    }
+                    else
+                    {
+                        Debug.Log("Living to work on foot");
+                        Debug.Log(controller);
+                        transform.position = livingPlace.PedestrianPosition.transform.position;
+
+                        controller.GoTo(livingPlace.PedestrianPosition, workPlace.PedestrianPosition);
+                        controller.AsArrived += ArrivedToWork;
+                    }
                     break;
 
                 case ActionList.GoToHome:

@@ -56,7 +56,5 @@ public class WorldManager : MonoBehaviour
             Debug.Log("Hour = " + debugTime);
             lastTime = debugTime;
         }
-
-        //if (spawn) { spawn = false; popSpawner.CreatePopulation(structures); };
     }
 }

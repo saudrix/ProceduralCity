@@ -47,7 +47,6 @@ public class PopulationSpawner : MonoBehaviour
                 structure.AddHabitant();
                 home = structure.gameObject;
             }
-            Debug.Log("Searching for a house");
             houseMaxIter++;
         }
         // Chosing a connectable workplace
@@ -73,7 +72,6 @@ public class PopulationSpawner : MonoBehaviour
                     //}
                 }
             }
-            Debug.Log("Searching for a work place");
             workMaxIter++;
         }
         // Instantiate a person
@@ -87,13 +85,13 @@ public class PopulationSpawner : MonoBehaviour
 
         personManager.planning = allPlannings[UnityEngine.Random.Range(0, allPlannings.Count - 1)];
 
-        personManager.asCar = UnityEngine.Random.Range(0, 0) == 0 ? true : false;
+        personManager.asCar = UnityEngine.Random.Range(1, 1) == 0 ? true : false;
 
         // if it has a car creates it
         if (personManager.asCar)
         {
             GameObject carPrefEmpty = GameObject.Instantiate(carPrefab);
-            GameObject carBody = GameObject.Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0, .1f, 0), Quaternion.Euler(0, 0, 0), carPrefEmpty.transform);
+            /*GameObject carBody = */Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0, .1f, 0), Quaternion.Euler(0, 0, 0), carPrefEmpty.transform);
             personManager.SetCar(carPrefEmpty);
 
         }
