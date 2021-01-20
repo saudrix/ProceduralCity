@@ -31,6 +31,7 @@ public class RoadConnector
 
     public void ConnectRoadRight(GameObject rl, GameObject rr)
     {
+        // Connecting the car graph
         Waypoint RightIn = rl.transform.Find("RightIn").gameObject.GetComponent<Waypoint>();
         Waypoint RightOut = rl.transform.Find("RightOut").gameObject.GetComponent<Waypoint>();
 
@@ -39,10 +40,21 @@ public class RoadConnector
 
         ConnectWaypoint(RightOut, LeftIn);
         ConnectWaypoint(LeftOut, RightIn);
+
+        // Connecting the pedestrian graph
+        RightIn = rl.transform.Find("RightIn_P").gameObject.GetComponent<Waypoint>();
+        RightOut = rl.transform.Find("RightOut_P").gameObject.GetComponent<Waypoint>();
+
+        LeftIn = rr.transform.Find("LeftIn_P").gameObject.GetComponent<Waypoint>();
+        LeftOut = rr.transform.Find("LeftOut_P").gameObject.GetComponent<Waypoint>();
+
+        ConnectWaypointBidirectionnal(RightOut, LeftIn);
+        ConnectWaypointBidirectionnal(LeftOut, RightIn);
     }
 
     public void ConnectRoadDown(GameObject tr, GameObject dr)
     {
+        // Connecting the car graph
         Waypoint BottomIn = tr.transform.Find("BottomIn").gameObject.GetComponent<Waypoint>();
         Waypoint BottomOut = tr.transform.Find("BottomOut").gameObject.GetComponent<Waypoint>();
 
@@ -51,6 +63,24 @@ public class RoadConnector
 
         ConnectWaypoint(TopOut, BottomIn);
         ConnectWaypoint(BottomOut, TopIn);
+
+        // Connecting the pedestrian graph
+        BottomIn = tr.transform.Find("BottomIn_P").gameObject.GetComponent<Waypoint>();
+        BottomOut = tr.transform.Find("BottomOut_P").gameObject.GetComponent<Waypoint>();
+
+        TopIn = dr.transform.Find("TopIn_P").gameObject.GetComponent<Waypoint>();
+        TopOut = dr.transform.Find("TopOut_P").gameObject.GetComponent<Waypoint>();
+
+        ConnectWaypointBidirectionnal(TopOut, BottomIn);
+        ConnectWaypointBidirectionnal(BottomOut, TopIn);
+    }
+
+    public void ConnectWaypointBidirectionnal(Waypoint w1, Waypoint w2)
+    {
+        w1.next.Add(w2);
+        w1.previous.Add(w2);
+        w2.next.Add(w1);
+        w2.previous.Add(w1);
     }
 
     public void ConnectWaypoint(Waypoint first, Waypoint second)
