@@ -690,7 +690,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 0.9137255}
-  m_Intensity: 1
+  m_Intensity: 0.7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1530,9 +1530,9 @@ MonoBehaviour:
   timeManagment: 10
   worldSize: 50
   mapGenerator:
-    densityFrenquency: 5
-    maxSample: 40
-    maxLowSample: 20
+    densityFrenquency: 3.41
+    maxSample: 20
+    maxLowSample: 10
   roadInstantier:
     I_roads:
     - {fileID: 488554524175839880, guid: 3e39a0fd49afe5f42bf48582f687e3cf, type: 3}
@@ -1951,7 +1951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 783e0fa68e0435b41b2ae97a2b053206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popSize: 1
+  popSize: 201
   allPlannings:
   - {fileID: 11400000, guid: 5fa868e0337bc5d4b8f2c9271692c5e6, type: 2}
   - {fileID: 11400000, guid: a45244220b7e67a4b9d38d39043d442b, type: 2}

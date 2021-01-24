@@ -23,10 +23,10 @@ public class PopulationSpawner : MonoBehaviour
 
     IEnumerator GraduallyInstantiate(List<GameObject> structures)
     {
-        Debug.Log(structures);
+        //Debug.Log(structures);
         for (int i = 0; i < popSize + 1; i++) {
-            Debug.Log(i);
-            Debug.Log(CreatePerson(structures));
+            //Debug.Log(i);
+            CreatePerson(structures);
             yield return null;
             //yield return new WaitForSeconds(5);
         }
@@ -76,7 +76,7 @@ public class PopulationSpawner : MonoBehaviour
         }
         // Instantiate a person
         GameObject selectedPrefab = charactersPrefabs[UnityEngine.Random.Range(0, charactersPrefabs.Count - 1)];
-        GameObject person = GameObject.Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
+        GameObject person = GameObject.Instantiate(selectedPrefab, new Vector3(0,-100,0), Quaternion.identity);
 
         Inhabitant personManager = person.GetComponent<Inhabitant>();
 
@@ -85,8 +85,8 @@ public class PopulationSpawner : MonoBehaviour
 
         personManager.planning = allPlannings[UnityEngine.Random.Range(0, allPlannings.Count - 1)];
 
-        personManager.asCar = UnityEngine.Random.Range(1, 1) == 0 ? true : false;
-
+        personManager.asCar = UnityEngine.Random.Range(0, 10) < 5 ? true : false;
+        //print(personManager.asCar);
         // if it has a car creates it
         if (personManager.asCar)
         {
@@ -97,7 +97,7 @@ public class PopulationSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("PIETON");
+            //Debug.Log("PIETON");
         }
         //home.transform.position = new Vector3(home.transform.position.x, 10, home.transform.position.z);
         //work.transform.position = new Vector3(work.transform.position.x, 10, work.transform.position.z);

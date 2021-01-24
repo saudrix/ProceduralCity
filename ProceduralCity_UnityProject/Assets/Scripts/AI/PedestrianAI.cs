@@ -37,7 +37,8 @@ public class PedestrianAI : MonoBehaviour
         currentTarget = start;
         this.destination = destination;
 
-        Vector3 relative = transform.InverseTransformPoint(GetNextTarget().transform.position/*.GetPosition()*/);
+        //Debug.Log(transform);
+        Vector3 relative = transform.InverseTransformPoint(GetNextTarget().GetPosition()/*.GetPosition()*/);
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
@@ -85,6 +86,7 @@ public class PedestrianAI : MonoBehaviour
         else if(currentTarget != null)
         {
             Vector3 relative = transform.InverseTransformPoint(currentTarget.transform.position);
+            relative.y = 0.2f;
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
             var rotateCar = 0;
@@ -131,7 +133,6 @@ public class PedestrianAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Actually choosing");
             currentTarget = ClosestPoint();
         }
         return currentTarget;
@@ -155,7 +156,7 @@ public class PedestrianAI : MonoBehaviour
 
     float EuclideanDist(Vector3 w1, Vector3 w2)
     {
-        Debug.Log((float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2)));
+        //Debug.Log((float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2)));
         return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
     }
 }

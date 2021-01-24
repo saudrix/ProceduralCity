@@ -72,7 +72,7 @@ public class CarAI : MonoBehaviour
         currentTarget = start;
         this.destination = destination;
 
-        Vector3 relative = transform.InverseTransformPoint(GetNextTarget().transform.position/*.GetPosition()*/);
+        Vector3 relative = transform.InverseTransformPoint(GetNextTarget().GetPosition()/*.GetPosition()*/);
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, angle, 0);
@@ -120,6 +120,7 @@ public class CarAI : MonoBehaviour
         {
             Vector3 relative = transform.InverseTransformPoint(currentTarget.transform.position);
             float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+            relative.y = .1f;
 
             var rotateCar = 0;
             if (angle > angleOffset) rotateCar = 1;
@@ -165,7 +166,7 @@ public class CarAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Actually choosing");
+            //Debug.Log("Actually choosing");
             currentTarget = ClosestPoint();
         }
         return currentTarget;
@@ -189,7 +190,7 @@ public class CarAI : MonoBehaviour
 
     float EuclideanDist(Vector3 w1, Vector3 w2)
     {
-        Debug.Log((float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2)));
+        //Debug.Log((float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2)));
         return (float)Math.Sqrt(Math.Pow((w1.x - w2.x), 2) + Math.Pow((w1.z - w2.z), 2));
     }
 

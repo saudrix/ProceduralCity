@@ -46,6 +46,7 @@ public class Inhabitant : MonoBehaviour
     {
         this.car = car;
         carController = car.GetComponent<CarAI>();
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
 
@@ -61,6 +62,13 @@ public class Inhabitant : MonoBehaviour
         }
 
         lastAction = planning.actions[(int)WorldManager.timeOfDay];
+        
+        leftHome += livingPlace.lightDown;
+        comeHome += livingPlace.lightUp;
+        leftWork += workPlace.lightDown;
+        comeWork += workPlace.lightUp;
+
+        comeHome?.Invoke();
 
         /*Debug.Log(livingPlace);
         Debug.Log(livingPlace.CarPosition);
@@ -107,7 +115,7 @@ public class Inhabitant : MonoBehaviour
         if(action != lastAction)
         {
 
-            Debug.Log(action);
+            //Debug.Log(action);
             switch (action)
             {
                 case ActionList.GoToWork:
@@ -122,8 +130,10 @@ public class Inhabitant : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Living to work on foot");
-                        Debug.Log(controller);
+                        if (gameObject.GetComponent<MeshRenderer>().enabled == false)
+                            gameObject.GetComponent<MeshRenderer>().enabled = true;
+                        //Debug.Log("Living to work on foot");
+                        //Debug.Log(controller);
                         transform.position = livingPlace.PedestrianPosition.transform.position;
 
                         controller.GoTo(livingPlace.PedestrianPosition, workPlace.PedestrianPosition);
@@ -133,11 +143,21 @@ public class Inhabitant : MonoBehaviour
 
                 case ActionList.GoToHome:
                     leftWork?.Invoke();
-                    car.SetActive(true);
-                    car.transform.position = workPlace.CarPosition.transform.position;
-                    //carController.setPath(roadToHome);
-                    carController.GoTo(workPlace.CarPosition, livingPlace.CarPosition);
-                    carController.AsArrived += ArrivedToHome;
+                    if (asCar)
+                    {
+                        car.SetActive(true);
+                        car.transform.position = workPlace.CarPosition.transform.position;
+                        //carController.setPath(roadToHome);
+                        carController.GoTo(workPlace.CarPosition, livingPlace.CarPosition);
+                        carController.AsArrived += ArrivedToHome;
+                    }
+                    else
+                    {
+                        transform.position = workPlace.PedestrianPosition.transform.position;
+
+                        controller.GoTo(workPlace.PedestrianPosition, livingPlace.PedestrianPosition);
+                        controller.AsArrived += ArrivedToHome;
+                    }
                     break;
             }
             lastAction = action;
@@ -146,17 +166,32 @@ public class Inhabitant : MonoBehaviour
 
     private void ArrivedToHome()
     {
-        car.SetActive(false);
-        carController.AsArrived -= ArrivedToHome;
+        if (asCar)
+        {
+            car.SetActive(false);
+            carController.AsArrived -= ArrivedToHome;
+        }
+        else
+        {
+            controller.AsArrived -= ArrivedToHome;
+        }
         comeHome?.Invoke();
+        //Debug.Log("Arrived at home");
     }
 
     private void ArrivedToWork()
     {
-        car.SetActive(false);
-        carController.AsArrived -= ArrivedToWork;
+        if (asCar)
+        {
+            car.SetActive(false);
+            carController.AsArrived -= ArrivedToWork;
+        }
+        else
+        {
+            controller.AsArrived -= ArrivedToWork;
+        }
         comeWork?.Invoke();
-        Debug.Log("Arrived at work");
+        //Debug.Log("Arrived at work");
     }
 
     // Camera rig follow path reference

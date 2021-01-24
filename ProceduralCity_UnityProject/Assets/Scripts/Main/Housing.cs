@@ -5,6 +5,8 @@ using UnityEngine;
 // This script holds the data for a given house
 public class Housing : MonoBehaviour
 {
+    public Light densityLight;
+
     public bool house;
 
     public float density;
@@ -45,5 +47,14 @@ public class Housing : MonoBehaviour
     public bool ElectableAsWorkPlace()
     {
         return workersCount < nbWorkers;
+    }
+
+    public void lightUp()
+    {
+        if(densityLight.intensity <= workersCount + habitantCount) densityLight.intensity += 1;
+    }
+
+    public void lightDown() {
+        if(densityLight.intensity > 0) densityLight.intensity -= 1; 
     }
 }
