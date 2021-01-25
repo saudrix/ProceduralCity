@@ -20,6 +20,7 @@ public class PedestrianController : MonoBehaviour
     public void Move(Vector2 target)
     {
         this.movement = target;
+        this.movement.y = 3f;
     }
 
     private void FixedUpdate()

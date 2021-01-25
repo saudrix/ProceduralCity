@@ -70,6 +70,7 @@ public class PopulationSpawner : MonoBehaviour
                     //{
                         work = structure.gameObject;
                     //}
+
                 }
             }
             workMaxIter++;
@@ -91,9 +92,11 @@ public class PopulationSpawner : MonoBehaviour
         if (personManager.asCar)
         {
             GameObject carPrefEmpty = GameObject.Instantiate(carPrefab);
-            /*GameObject carBody = */Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0, .1f, 0), Quaternion.Euler(0, 0, 0), carPrefEmpty.transform);
+//            carPrefEmpty.transform.position = new Vector3(0, 1.1f, 0);
+            carPrefEmpty.transform.localScale = new Vector3(.5f, .5f, .5f);
+            /*GameObject carBody = */
+            Instantiate(carPrefabsBody[UnityEngine.Random.Range(0, carPrefabsBody.Count - 1)], new Vector3(0, .1f, 0), Quaternion.Euler(-90, 90, 90), carPrefEmpty.transform);
             personManager.SetCar(carPrefEmpty);
-
         }
         else
         {

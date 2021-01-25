@@ -1958,7 +1958,7 @@ MonoBehaviour:
   charactersPrefabs:
   - {fileID: 7999561476310002564, guid: 04b458fcdb6e8e54fa3d6c2ff69e07c9, type: 3}
   carPrefabsBody:
-  - {fileID: 463036029495256674, guid: 0a36e6c8f4b46724fb28399b372425f1, type: 3}
+  - {fileID: 7921324881198113742, guid: ac49ad51acca7c546813356795bb65b6, type: 3}
   carPrefab: {fileID: 3556821771903332091, guid: 20c4e9861dc7738459f3d5421705f951, type: 3}
 --- !u!4 &1511279399
 Transform:

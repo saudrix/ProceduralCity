@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
     public void Drive(Vector2 target)
     {
         this.movement = target;
+        this.movement.y = 2f;
     }
 
     private void FixedUpdate()
